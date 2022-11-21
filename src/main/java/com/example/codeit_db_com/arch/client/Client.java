@@ -2,6 +2,7 @@ package com.example.codeit_db_com.arch.client;
 
 
 import com.example.codeit_db_com.arch.course.Course;
+import com.example.codeit_db_com.arch.transaction.Transaction;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -21,16 +22,12 @@ public class Client {
     private String email;
     private String password;
     private LocalDate registrationDate;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(name = "client_course",
-            joinColumns = {
-                @JoinColumn(name = "client_id", referencedColumnName = "id")
-            },
-                inverseJoinColumns = {
-                @JoinColumn(name = "course_id", referencedColumnName = "id")
-            }
+    @OneToMany(
+            mappedBy = "client",
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.PERSIST
     )
-    private List<Course> courses = new ArrayList<>();
+    private Set<Transaction> transactions = new HashSet<>();
 
     public Client(String userName, String email, String password, LocalDate registrationDate) {
         this.userName = userName;
@@ -82,17 +79,17 @@ public class Client {
         this.registrationDate = registrationDate;
     }
 
-    public List<Course> getCourses() {
-        return courses;
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses = courses;
+    public void setTransactions(Set<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
-    public void addCourse(Course course){
-        courses.add(course);
-        course.addClient(this);
+    public void addTransaction(Transaction transaction){
+        transactions.add(transaction);
+        transaction.setClient(this);
     }
 
     @Override

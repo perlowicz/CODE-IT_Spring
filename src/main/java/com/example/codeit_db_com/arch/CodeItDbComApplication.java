@@ -4,12 +4,13 @@ import com.example.codeit_db_com.arch.client.Client;
 import com.example.codeit_db_com.arch.client.ClientRepository;
 import com.example.codeit_db_com.arch.course.Course;
 import com.example.codeit_db_com.arch.course.CourseRepository;
+import com.example.codeit_db_com.arch.transaction.Transaction;
+import com.example.codeit_db_com.arch.transaction.TransactionRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.time.LocalDate;
-import java.util.Optional;
 
 @SpringBootApplication
 public class CodeItDbComApplication {
@@ -18,15 +19,23 @@ public class CodeItDbComApplication {
         ConfigurableApplicationContext context = SpringApplication.run(CodeItDbComApplication.class, args);
         CourseRepository courseRepository = context.getBean(CourseRepository.class);
         ClientRepository clientRepository = context.getBean(ClientRepository.class);
+        TransactionRepository transactionRepository = context.getBean(TransactionRepository.class);
 
         Client client1 = clientRepository.findById(1L).get();
         Course course1 = courseRepository.findById(1L).get();
-        System.out.println(client1);
-        System.out.println(course1);
-        client1.addCourse(course1);
-        clientRepository.save(client1);
+        Course course2 = courseRepository.findById(2L).get();
+        Transaction transaction = new Transaction(client1, course1, LocalDate.EPOCH, LocalDate.MAX, "Good opinion");
+        Transaction secondTransaction = new Transaction(client1, course2, LocalDate.EPOCH, LocalDate.MAX, null);
 
-        System.out.println("Zakupione kursy dla uzytkownika o id 1 -> " + clientRepository.getCourseNameForClient(1L).get());
+        transactionRepository.save(transaction);
+        transactionRepository.save(secondTransaction);
+//        System.out.println(client1);
+//        System.out.println(course1);
+//        client1.addTransaction(course1);
+//        clientRepository.save(client1);
+//
+//        System.out.println("Zakupione kursy dla uzytkownika o id 1 -> " + clientRepository.getCourseNameForClient(1L).get());
+
     }
 
 }

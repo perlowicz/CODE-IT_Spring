@@ -21,9 +21,18 @@ public class CourseController {
     }
 
     @GetMapping("/courses/{id}")
-    ResponseEntity<CourseDTO> getClientById(@PathVariable Long id){
+    ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id){
         return courseService.getCourseById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
+    @GetMapping("/courses")
+    ResponseEntity<List<CourseDTO>> getAllCourses(){
+        return courseService.getAllCourses()
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+
 }

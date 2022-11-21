@@ -1,10 +1,13 @@
 package com.example.codeit_db_com.arch.course;
 
 import com.example.codeit_db_com.arch.client.Client;
+import com.example.codeit_db_com.arch.transaction.Transaction;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "course")
@@ -16,11 +19,12 @@ public class Course {
     private String name;
     private String description;
     private Double price;
-    @ManyToMany(mappedBy = "courses",
+    @OneToMany(
+            mappedBy = "course",
             fetch = FetchType.EAGER,
             cascade = CascadeType.PERSIST
     )
-    private List<Client> clients = new ArrayList<>();
+    private Set<Transaction> transactions = new HashSet<>();
 
     public Course(String name, String description, Double price) {
         this.name = name;
@@ -63,8 +67,8 @@ public class Course {
         this.price = price;
     }
 
-    public void addClient(Client client){
-        clients.add(client);
+    public void addTransaction(Transaction transaction){
+        transactions.add(transaction);
     }
 
     @Override
