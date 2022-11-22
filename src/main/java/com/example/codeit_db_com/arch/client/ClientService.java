@@ -1,8 +1,12 @@
 package com.example.codeit_db_com.arch.client;
 
-import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
+import com.example.codeit_db_com.arch.dto.client.ClientTransactionDTO;
+import com.example.codeit_db_com.arch.dto.client.SimpleClientDTO;
+import com.example.codeit_db_com.arch.mappers.client.ClientDTOMapper;
+import com.example.codeit_db_com.arch.mappers.client.SimpleClientDTOMapper;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -20,7 +24,7 @@ public class ClientService {
         this.simpleClientDTOMapper = simpleClientDTOMapper;
     }
 
-    Optional<ClientDTO> getClientById(Long id){
+    Optional<ClientTransactionDTO> getClientById(Long id){
         return clientRepository.findById(id).map(clientDTOMapper::map);
     }
 
@@ -37,5 +41,19 @@ public class ClientService {
         Client map = simpleClientDTOMapper.map(simpleClientDTO);
         Client savedClient = clientRepository.save(map);
         return simpleClientDTOMapper.map(savedClient);
+    }
+
+    Optional<SimpleClientDTO> replaceClient(Long clientId, SimpleClientDTO simpleClientDTO){
+        if (!clientRepository.existsById(clientId))
+            return Optional.empty();
+        simpleClientDTO.setId(clientId);
+        simpleClientDTO.setRegistrationDate(LocalDate.now());
+        Client clientToUpdate = simpleClientDTOMapper.map(simpleClientDTO);
+        Client updatedEntity = clientRepository.save(clientToUpdate);
+        return Optional.of(simpleClientDTOMapper.map(updatedEntity));
+    }
+
+    void deleteClient(Long id){
+        clientRepository.deleteById(id);
     }
 }

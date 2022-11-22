@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ClientRepository extends CrudRepository<Client, Long> {
-
+    Optional<Client> findByUserName(String name);
 }

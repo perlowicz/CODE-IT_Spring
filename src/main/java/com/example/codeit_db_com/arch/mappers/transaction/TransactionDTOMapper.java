@@ -1,37 +1,30 @@
-package com.example.codeit_db_com.arch.transaction;
+package com.example.codeit_db_com.arch.mappers.transaction;
 
 import com.example.codeit_db_com.arch.client.Client;
-import com.example.codeit_db_com.arch.client.ClientDTOMapper;
 import com.example.codeit_db_com.arch.client.ClientRepository;
-import com.example.codeit_db_com.arch.client.SimpleClientDTOMapper;
 import com.example.codeit_db_com.arch.course.Course;
-import com.example.codeit_db_com.arch.course.CourseDTOMapper;
 import com.example.codeit_db_com.arch.course.CourseRepository;
-import com.example.codeit_db_com.arch.course.SimpleCourseDTOMapper;
+import com.example.codeit_db_com.arch.dto.transaction.TransactionSaveDTO;
+import com.example.codeit_db_com.arch.mappers.client.SimpleClientDTOMapper;
+import com.example.codeit_db_com.arch.mappers.course.SimpleCourseDTOMapper;
+import com.example.codeit_db_com.arch.transaction.Transaction;
+import com.example.codeit_db_com.arch.dto.transaction.TransactionDTO;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class TransactionDTOMapper {
 
     private final SimpleClientDTOMapper simpleClientDTOMapper;
     private final SimpleCourseDTOMapper simpleCourseDTOMapper;
-    private final ClientRepository clientRepository;
-    private final CourseRepository courseRepository;
 
 
-    private TransactionDTOMapper(SimpleClientDTOMapper simpleClientDTOMapper,
-                                 SimpleCourseDTOMapper simpleCourseDTOMapper,
-                                 ClientRepository clientRepository,
-                                 CourseRepository courseRepository) {
+    public TransactionDTOMapper(SimpleClientDTOMapper simpleClientDTOMapper,
+                                 SimpleCourseDTOMapper simpleCourseDTOMapper) {
         this.simpleClientDTOMapper = simpleClientDTOMapper;
         this.simpleCourseDTOMapper = simpleCourseDTOMapper;
-        this.clientRepository = clientRepository;
-        this.courseRepository = courseRepository;
     }
 
-    TransactionDTO map(Transaction transaction){
+    public TransactionDTO map(Transaction transaction){
         TransactionDTO transactionDTO = new TransactionDTO();
 
         transactionDTO.setId(transaction.getId());
@@ -42,23 +35,6 @@ public class TransactionDTOMapper {
         transactionDTO.setCourse(simpleCourseDTOMapper.map(transaction.getCourse()));
 
         return transactionDTO;
-    }
-
-    Transaction map(TransactionDTO transactionDTO){
-        Transaction transaction = new Transaction();
-
-        transaction.setId(transactionDTO.getId());
-        transaction.setOpinion(transactionDTO.getOpinion());
-        transaction.setSignupDate(transactionDTO.getSignupDate());
-        transaction.setExpirationDate(transactionDTO.getExpirationDate());
-
-        Client client = clientRepository.findById(simpleClientDTOMapper.map(transactionDTO.getClient()).getId()).orElseThrow();
-        Course course = courseRepository.findById(simpleCourseDTOMapper.map(transactionDTO.getCourse()).getId()).orElseThrow();
-
-        transaction.setClient(client);
-        transaction.setCourse(course);
-
-        return transaction;
     }
 //    Transaction map(TransactionSaveDTO transactionSaveDTO){
 //        Transaction transaction = new Transaction();

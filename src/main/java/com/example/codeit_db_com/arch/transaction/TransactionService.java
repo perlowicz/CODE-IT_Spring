@@ -1,7 +1,9 @@
 package com.example.codeit_db_com.arch.transaction;
 
-import com.example.codeit_db_com.arch.client.ClientDTO;
-import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
+import com.example.codeit_db_com.arch.dto.transaction.TransactionDTO;
+import com.example.codeit_db_com.arch.dto.transaction.TransactionSaveDTO;
+import com.example.codeit_db_com.arch.mappers.transaction.TransactionDTOMapper;
+import com.example.codeit_db_com.arch.mappers.transaction.TransactionSaveDTOMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -14,11 +16,14 @@ public class TransactionService {
 
     private final TransactionRepository transactionRepository;
     private final TransactionDTOMapper transactionDTOMapper;
+    private final TransactionSaveDTOMapper transactionSaveDTOMapper;
 
     public TransactionService(TransactionRepository transactionRepository,
-                              TransactionDTOMapper transactionDTOMapper) {
+                               TransactionDTOMapper transactionDTOMapper,
+                               TransactionSaveDTOMapper transactionSaveDTOMapper) {
         this.transactionRepository = transactionRepository;
         this.transactionDTOMapper = transactionDTOMapper;
+        this.transactionSaveDTOMapper = transactionSaveDTOMapper;
     }
 
     Optional<TransactionDTO> getTransactionById(Long id){
@@ -34,11 +39,13 @@ public class TransactionService {
         return Optional.of(resultList);
     }
 
-    TransactionDTO saveTransaction(TransactionDTO transactionSaveDTO){
-        Transaction map = transactionDTOMapper.map(transactionSaveDTO);
-        map.setSignupDate(LocalDate.now());
-        map.setExpirationDate(LocalDate.now().plusYears(1));
+    TransactionSaveDTO saveTransaction(TransactionSaveDTO transactionSaveDTO){
+        if (transactionSaveDTO.getOpinion() == null) //sytuacja gdy użytkownik nie dodał opinii
+            transactionSaveDTO.setOpinion("brak opinii");
+        transactionSaveDTO.setSignupDate(LocalDate.now());
+        transactionSaveDTO.setExpirationDate(LocalDate.now().plusYears(1));
+        Transaction map = transactionSaveDTOMapper.map(transactionSaveDTO);
         Transaction savedTransaction = transactionRepository.save(map);
-        return transactionDTOMapper.map(savedTransaction);
+        return transactionSaveDTOMapper.map(savedTransaction);
     }
 }

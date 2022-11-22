@@ -26,7 +26,7 @@ public class Client {
     @OneToMany(
             mappedBy = "client",
             fetch = FetchType.EAGER,
-            cascade = CascadeType.PERSIST
+            cascade = CascadeType.REMOVE
     )
     private List<Transaction> transactions = new ArrayList<>();
 

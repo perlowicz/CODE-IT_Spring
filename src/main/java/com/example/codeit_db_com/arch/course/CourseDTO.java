@@ -1,6 +1,6 @@
 package com.example.codeit_db_com.arch.course;
 
-import com.example.codeit_db_com.arch.dto.CourseTransactionDTO;
+import com.example.codeit_db_com.arch.dto.transaction.TransactionDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +10,7 @@ public class CourseDTO {
     private String name;
     private String description;
     private Double price;
-    private List<CourseTransactionDTO> transactions = new ArrayList<>();
+    private List<TransactionDTO> transactions = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -44,11 +44,11 @@ public class CourseDTO {
         this.id = id;
     }
 
-    public List<CourseTransactionDTO> getTransactions() {
+    public List<TransactionDTO> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<CourseTransactionDTO> transactions) {
+    public void setTransactions(List<TransactionDTO> transactions) {
         this.transactions = transactions;
     }
 }

@@ -1,6 +1,7 @@
-package com.example.codeit_db_com.arch.client;
+package com.example.codeit_db_com.arch.mappers.client;
 
-import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
+import com.example.codeit_db_com.arch.client.Client;
+import com.example.codeit_db_com.arch.dto.client.SimpleClientDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -22,12 +23,14 @@ public class SimpleClientDTOMapper {
 
     public Client map(SimpleClientDTO simpleClientDTO){
         Client client = new Client();
+
         client.setId(simpleClientDTO.getId());
         client.setUserName(simpleClientDTO.getUserName());
         client.setEmail(simpleClientDTO.getEmail());
         client.setPassword(simpleClientDTO.getPassword());
         client.setRegistrationDate(simpleClientDTO.getRegistrationDate());
         client.setTransactions(Collections.emptyList());
+
         return client;
     }
 }

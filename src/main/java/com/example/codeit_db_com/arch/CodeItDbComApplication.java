@@ -27,7 +27,7 @@ public class CodeItDbComApplication {
         Course course2 = courseRepository.findById(2L).get();
         Transaction transaction = new Transaction(client1, course1, LocalDate.EPOCH, LocalDate.MAX, "Good opinion");
         Transaction secondTransaction = new Transaction(client1, course2, LocalDate.EPOCH, LocalDate.MAX, "Bad opinion");
-        Transaction thirdTransaction = new Transaction(client2, course2, LocalDate.EPOCH, LocalDate.MAX, null);
+        Transaction thirdTransaction = new Transaction(client2, course2, LocalDate.EPOCH, LocalDate.MAX, "Cośtam");
 
         transactionRepository.save(transaction);
         transactionRepository.save(secondTransaction);

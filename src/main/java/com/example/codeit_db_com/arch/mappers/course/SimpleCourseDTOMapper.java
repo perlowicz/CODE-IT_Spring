@@ -1,6 +1,7 @@
-package com.example.codeit_db_com.arch.course;
+package com.example.codeit_db_com.arch.mappers.course;
 
-import com.example.codeit_db_com.arch.dto.SimpleCourseDTO;
+import com.example.codeit_db_com.arch.course.Course;
+import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;

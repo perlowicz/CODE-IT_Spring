@@ -1,9 +1,7 @@
-package com.example.codeit_db_com.arch.transaction;
+package com.example.codeit_db_com.arch.dto.transaction;
 
-import com.example.codeit_db_com.arch.client.ClientDTO;
-import com.example.codeit_db_com.arch.course.CourseDTO;
-import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
-import com.example.codeit_db_com.arch.dto.SimpleCourseDTO;
+import com.example.codeit_db_com.arch.dto.client.SimpleClientDTO;
+import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
 
 import java.time.LocalDate;
 

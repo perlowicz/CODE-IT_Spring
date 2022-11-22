@@ -1,4 +1,4 @@
-package com.example.codeit_db_com.arch.dto;
+package com.example.codeit_db_com.arch.dto.client;
 
 import java.time.LocalDate;
 

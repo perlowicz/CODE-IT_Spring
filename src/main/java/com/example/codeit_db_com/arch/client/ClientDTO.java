@@ -1,6 +1,6 @@
 package com.example.codeit_db_com.arch.client;
 
-import com.example.codeit_db_com.arch.dto.ClientTransactionDTO;
+import com.example.codeit_db_com.arch.dto.transaction.TransactionDTO;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class ClientDTO {
     private String email;
     private String password;
     private LocalDate registrationDate;
-    private List<ClientTransactionDTO> transactions = new ArrayList<>();
+    private List<TransactionDTO> transactions = new ArrayList<>();
 
     public Long getId() {
         return id;
@@ -55,11 +55,11 @@ public class ClientDTO {
         this.registrationDate = registrationDate;
     }
 
-    public List<ClientTransactionDTO> getTransactions() {
+    public List<TransactionDTO> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(List<ClientTransactionDTO> transactions) {
+    public void setTransactions(List<TransactionDTO> transactions) {
         this.transactions = transactions;
     }
 }

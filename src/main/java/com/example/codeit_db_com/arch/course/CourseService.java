@@ -1,6 +1,9 @@
 package com.example.codeit_db_com.arch.course;
 
-import com.example.codeit_db_com.arch.dto.SimpleCourseDTO;
+import com.example.codeit_db_com.arch.dto.course.CourseTransactionDTO;
+import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
+import com.example.codeit_db_com.arch.mappers.course.CourseDTOMapper;
+import com.example.codeit_db_com.arch.mappers.course.SimpleCourseDTOMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ public class CourseService {
         this.simpleCourseDTOMapper = simpleCourseDTOMapper;
     }
 
-    Optional<CourseDTO> getCourseById(Long id){
+    Optional<CourseTransactionDTO> getCourseById(Long id){
         return courseRepository.findById(id).map(courseDTOMapper::map);
     }
 
@@ -39,5 +42,18 @@ public class CourseService {
         Course map = simpleCourseDTOMapper.map(simpleCourseDTO);
         Course savedClient = courseRepository.save(map);
         return simpleCourseDTOMapper.map(savedClient);
+    }
+
+    Optional<SimpleCourseDTO> replaceCourse(Long courseId, SimpleCourseDTO simpleCourseDTO){
+        if (!courseRepository.existsById(courseId))
+            return Optional.empty();
+        simpleCourseDTO.setId(courseId);
+        Course mappedCourse = simpleCourseDTOMapper.map(simpleCourseDTO);
+        Course updatedCourse = courseRepository.save(mappedCourse);
+        return Optional.of(courseDTOMapper.map(updatedCourse));
+    }
+
+    void deleteCourse(Long id){
+        courseRepository.deleteById(id);
     }
 }

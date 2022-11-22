@@ -1,12 +1,13 @@
 package com.example.codeit_db_com.arch.transaction;
 
+import com.example.codeit_db_com.arch.dto.transaction.TransactionDTO;
+import com.example.codeit_db_com.arch.dto.transaction.TransactionSaveDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class TransactionController {
@@ -32,8 +33,8 @@ public class TransactionController {
     }
 
     @PostMapping("/transactions")
-    ResponseEntity<TransactionDTO> saveTransaction(@RequestBody TransactionDTO transactionSaveDTO){
-        TransactionDTO saved = transactionService.saveTransaction(transactionSaveDTO);
+    ResponseEntity<TransactionSaveDTO> saveTransaction(@RequestBody TransactionSaveDTO transactionSaveDTO){
+        TransactionSaveDTO saved = transactionService.saveTransaction(transactionSaveDTO);
         URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(saved.getId())

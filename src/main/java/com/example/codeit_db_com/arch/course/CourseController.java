@@ -1,6 +1,7 @@
 package com.example.codeit_db_com.arch.course;
 
-import com.example.codeit_db_com.arch.dto.SimpleCourseDTO;
+import com.example.codeit_db_com.arch.dto.course.CourseTransactionDTO;
+import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -18,7 +19,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/{id}")
-    ResponseEntity<CourseDTO> getCourseById(@PathVariable Long id){
+    ResponseEntity<CourseTransactionDTO> getCourseById(@PathVariable Long id){
         return courseService.getCourseById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -39,5 +40,19 @@ public class CourseController {
                 .buildAndExpand(saveCourse.getId())
                 .toUri();
         return ResponseEntity.created(savedClientURI).body(saveCourse);
+    }
+
+    @PutMapping("/courses/{id}")
+    ResponseEntity<?> update(@PathVariable Long id,
+                             @RequestBody SimpleCourseDTO simpleCourseDTO){
+        return courseService.replaceCourse(id, simpleCourseDTO)
+                .map(c -> ResponseEntity.noContent().build())
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/courses/{id}")
+    ResponseEntity<?> deleteCourse(@PathVariable Long id){
+        courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 }
