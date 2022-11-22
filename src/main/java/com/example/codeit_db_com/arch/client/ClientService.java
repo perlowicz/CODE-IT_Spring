@@ -1,5 +1,6 @@
 package com.example.codeit_db_com.arch.client;
 
+import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,28 +12,30 @@ public class ClientService {
 
     private final ClientRepository clientRepository;
     private final ClientDTOMapper clientDTOMapper;
+    private final SimpleClientDTOMapper simpleClientDTOMapper;
 
-    public ClientService(ClientRepository clientRepository, ClientDTOMapper clientDTOMapper) {
+    public ClientService(ClientRepository clientRepository, ClientDTOMapper clientDTOMapper, SimpleClientDTOMapper simpleClientDTOMapper) {
         this.clientRepository = clientRepository;
         this.clientDTOMapper = clientDTOMapper;
+        this.simpleClientDTOMapper = simpleClientDTOMapper;
     }
 
     Optional<ClientDTO> getClientById(Long id){
-        return clientRepository.findById(id).map(clientDTOMapper::mapClientToDTO);
+        return clientRepository.findById(id).map(clientDTOMapper::map);
     }
 
-    Optional<List<ClientDTO>> getAllClients(){
-        List<ClientDTO> resultList = new ArrayList<>();
-        clientRepository.findAll().iterator().forEachRemaining(client -> {
-            ClientDTO mappedClient = clientDTOMapper.mapClientToDTO(client);
-            resultList.add(mappedClient);
+    Optional<List<SimpleClientDTO>> getAllClients(){
+        List<SimpleClientDTO> resultList = new ArrayList<>();
+        clientRepository.findAll().forEach(client -> {
+            SimpleClientDTO simpleClientDTO = simpleClientDTOMapper.map(client);
+            resultList.add(simpleClientDTO);
         });
         return Optional.of(resultList);
     }
 
-    ClientSaveDTO saveClient(ClientSaveDTO clientSaveDTO){
-        Client mappedClient = clientDTOMapper.mapSaveDtoToClient(clientSaveDTO);
-        Client savedClient = clientRepository.save(mappedClient);
-        return clientDTOMapper.mapClientToSaveDTO(savedClient);
+    SimpleClientDTO saveClient(SimpleClientDTO simpleClientDTO){
+        Client map = simpleClientDTOMapper.map(simpleClientDTO);
+        Client savedClient = clientRepository.save(map);
+        return simpleClientDTOMapper.map(savedClient);
     }
 }

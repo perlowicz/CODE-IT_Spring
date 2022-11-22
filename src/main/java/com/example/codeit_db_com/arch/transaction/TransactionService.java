@@ -1,8 +1,10 @@
 package com.example.codeit_db_com.arch.transaction;
 
 import com.example.codeit_db_com.arch.client.ClientDTO;
+import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,10 +27,18 @@ public class TransactionService {
 
     Optional<List<TransactionDTO>> getAllTransactions(){
         List<TransactionDTO> resultList = new ArrayList<>();
-        transactionRepository.findAll().iterator().forEachRemaining(transaction -> {
-            TransactionDTO mappedTransaction = transactionDTOMapper.map(transaction);
-            resultList.add(mappedTransaction);
+        transactionRepository.findAll().forEach(transaction -> {
+            TransactionDTO transactionDTO = transactionDTOMapper.map(transaction);
+            resultList.add(transactionDTO);
         });
         return Optional.of(resultList);
+    }
+
+    TransactionDTO saveTransaction(TransactionDTO transactionSaveDTO){
+        Transaction map = transactionDTOMapper.map(transactionSaveDTO);
+        map.setSignupDate(LocalDate.now());
+        map.setExpirationDate(LocalDate.now().plusYears(1));
+        Transaction savedTransaction = transactionRepository.save(map);
+        return transactionDTOMapper.map(savedTransaction);
     }
 }

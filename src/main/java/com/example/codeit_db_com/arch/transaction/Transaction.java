@@ -6,6 +6,7 @@ import com.example.codeit_db_com.arch.course.Course;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Entity
 @Table(name = "transaction")
@@ -16,7 +17,6 @@ public class Transaction {
     private Long id;
     @ManyToOne(
             fetch = FetchType.EAGER
-
     )
     @JoinColumn(
             name = "client_id"
@@ -86,5 +86,13 @@ public class Transaction {
 
     public void setOpinion(String opinion) {
         this.opinion = opinion;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

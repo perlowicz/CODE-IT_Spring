@@ -3,6 +3,7 @@ package com.example.codeit_db_com.arch.client;
 
 import com.example.codeit_db_com.arch.course.Course;
 import com.example.codeit_db_com.arch.transaction.Transaction;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class Client {
             fetch = FetchType.EAGER,
             cascade = CascadeType.PERSIST
     )
-    private Set<Transaction> transactions = new HashSet<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     public Client(String userName, String email, String password, LocalDate registrationDate) {
         this.userName = userName;
@@ -79,11 +80,11 @@ public class Client {
         this.registrationDate = registrationDate;
     }
 
-    public Set<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setTransactions(Set<Transaction> transactions) {
+    public void setTransactions(List<Transaction> transactions) {
         this.transactions = transactions;
     }
 

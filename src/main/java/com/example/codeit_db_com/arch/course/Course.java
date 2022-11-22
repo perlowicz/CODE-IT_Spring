@@ -24,7 +24,7 @@ public class Course {
             fetch = FetchType.EAGER,
             cascade = CascadeType.PERSIST
     )
-    private Set<Transaction> transactions = new HashSet<>();
+    private List<Transaction> transactions = new ArrayList<>();
 
     public Course(String name, String description, Double price) {
         this.name = name;
@@ -69,6 +69,14 @@ public class Course {
 
     public void addTransaction(Transaction transaction){
         transactions.add(transaction);
+    }
+
+    public List<Transaction> getTransactions() {
+        return transactions;
+    }
+
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions = transactions;
     }
 
     @Override

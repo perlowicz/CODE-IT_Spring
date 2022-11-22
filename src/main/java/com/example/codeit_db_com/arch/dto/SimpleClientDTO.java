@@ -1,19 +1,14 @@
-package com.example.codeit_db_com.arch.client;
-
-import com.example.codeit_db_com.arch.transaction.Transaction;
+package com.example.codeit_db_com.arch.dto;
 
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
-public class ClientSaveDTO {
+public class SimpleClientDTO {
 
     private Long id;
     private String userName;
     private String email;
     private String password;
     private LocalDate registrationDate;
-    private Set<Transaction> transactions = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -53,13 +48,5 @@ public class ClientSaveDTO {
 
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
-    }
-
-    public Set<Transaction> getTransactions() {
-        return transactions;
-    }
-
-    public void setTransactions(Set<Transaction> transactions) {
-        this.transactions = transactions;
     }
 }

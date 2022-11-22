@@ -1,15 +1,12 @@
 package com.example.codeit_db_com.arch.course;
 
-import com.example.codeit_db_com.arch.client.Client;
+import com.example.codeit_db_com.arch.dto.SimpleCourseDTO;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.Collections;
-import java.util.Iterator;
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CourseController {
@@ -28,11 +25,19 @@ public class CourseController {
     }
 
     @GetMapping("/courses")
-    ResponseEntity<List<CourseDTO>> getAllCourses(){
+    ResponseEntity<List<SimpleCourseDTO>> getAllCourses(){
         return courseService.getAllCourses()
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-
+    @PostMapping("/courses")
+    ResponseEntity<SimpleCourseDTO> save(@RequestBody SimpleCourseDTO simpleCourseDTO){
+        SimpleCourseDTO saveCourse = courseService.saveCourse(simpleCourseDTO);
+        URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(saveCourse.getId())
+                .toUri();
+        return ResponseEntity.created(savedClientURI).body(saveCourse);
+    }
 }

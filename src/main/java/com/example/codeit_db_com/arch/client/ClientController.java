@@ -1,6 +1,7 @@
 package com.example.codeit_db_com.arch.client;
 
 import com.example.codeit_db_com.arch.course.Course;
+import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,19 +27,19 @@ public class ClientController {
     }
 
     @GetMapping("/clients")
-    ResponseEntity<List<ClientDTO>> getAllClients(){
+    ResponseEntity<List<SimpleClientDTO>> getAllClients(){
         return clientService.getAllClients()
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping("/clients")
-    ResponseEntity<ClientSaveDTO> saveClient(@RequestBody ClientSaveDTO clientSaveDTO){
-        ClientSaveDTO savedClient = clientService.saveClient(clientSaveDTO);
-        URI savedClientUri = ServletUriComponentsBuilder.fromCurrentRequest()
+    ResponseEntity<SimpleClientDTO> save(@RequestBody SimpleClientDTO simpleClientDTO){
+        SimpleClientDTO savedClient = clientService.saveClient(simpleClientDTO);
+        URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path("/{id}")
                 .buildAndExpand(savedClient.getId())
                 .toUri();
-        return ResponseEntity.created(savedClientUri).body(savedClient);
+        return ResponseEntity.created(savedClientURI).body(savedClient);
     }
 }

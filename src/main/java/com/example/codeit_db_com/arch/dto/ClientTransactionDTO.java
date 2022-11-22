@@ -1,27 +1,21 @@
-package com.example.codeit_db_com.arch.transaction;
-
-import com.example.codeit_db_com.arch.client.ClientDTO;
-import com.example.codeit_db_com.arch.course.CourseDTO;
-import com.example.codeit_db_com.arch.dto.SimpleClientDTO;
-import com.example.codeit_db_com.arch.dto.SimpleCourseDTO;
+package com.example.codeit_db_com.arch.dto;
 
 import java.time.LocalDate;
 
-public class TransactionDTO {
+public class ClientTransactionDTO {
 
     private Long id;
-    private SimpleClientDTO client;
     private SimpleCourseDTO course;
     private LocalDate signupDate;
     private LocalDate expirationDate;
     private String opinion;
 
-    public SimpleClientDTO getClient() {
-        return client;
+    public Long getId() {
+        return id;
     }
 
-    public void setClient(SimpleClientDTO client) {
-        this.client = client;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public SimpleCourseDTO getCourse() {
@@ -54,13 +48,5 @@ public class TransactionDTO {
 
     public void setOpinion(String opinion) {
         this.opinion = opinion;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }
