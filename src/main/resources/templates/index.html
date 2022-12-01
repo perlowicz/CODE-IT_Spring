@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>CODE-IT</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+    </head>
+    <body>
+
+
+    <div th:insert="fragments/header"></div>
+
+        <main>
+            <h2>Strona główna</h2>
+            <p>Code-IT to platforma e-learningowa
+                stworzona do nauki najczęściej używanych
+                rozwiązań programistycznych w celu zdobycia podstawowej wiedzy i obycia
+                z językami typu "Python", "Java" czy "Javascript". Dostępne są również szkolenia
+                z zakresu tworzenia relacyjnych baz danych które świetnie uzupełniają cały proces
+                nauki. Po przerobieniu materiału masz pewność że posiadasz podstawy do posługiwania się
+                danym narzędziem i śmiało możesz rozwijać swoje umiejętności w zastosowaniu tych rozwiązań w
+                podejściu biznesowym.
+            </p>
+        </main>
+
+    <div th:insert="fragments/footer"></div>
+    </body>
+</html>

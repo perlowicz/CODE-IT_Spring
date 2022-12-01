@@ -1,0 +1,137 @@
+main h2, h3 {
+    border-bottom: 1px solid #7f8c8d;
+}
+
+.table-list {
+    border-collapse: collapse;
+    color: #2c3e50;
+    width: 100%;
+}
+
+.table-list,
+.table-list th,
+.table-list td {
+    border: 1px solid #bdc3c7;
+}
+
+.table-list th,
+.table-list td {
+    padding: 0.5rem;
+}
+
+.table-list th,
+.table-list tbody tr:nth-child(even) {
+    background-color: #ecf0f1;
+}
+
+.list-actions {
+    margin: 0;
+    text-align: center;
+    list-style-type: none;
+    padding: 0;
+}
+
+.list-actions li {
+    display: inline-block;
+}
+
+.list-actions-button-details,
+.list-actions-button-edit,
+.list-actions-button-delete {
+    display: inline-block;
+    width: 75px;
+    padding: 0.25rem 0.5rem;
+}
+
+.list-actions-button-details,
+.list-actions-button-edit,
+.list-actions-button-delete,
+.button-add,
+.form-button-submit,
+.form-button-cancel {
+    border: none;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.list-actions-button-details,
+.list-actions-button-edit {
+    margin-right: 1rem;
+}
+
+.list-actions-button-details {
+    background-color: #2980b9;
+}
+
+.list-actions-button-details:hover {
+    background-color: #3498db;
+}
+
+.list-actions-button-edit {
+    background-color: #f39c12;
+}
+
+.list-actions-button-edit:hover {
+    background-color: #f1c40f;
+}
+
+.list-actions-button-delete,
+.form-button-cancel {
+    background-color: #c0392b;
+}
+
+.list-actions-button-delete:hover,
+.form-button-cancel {
+    background-color: #e74c3c;
+}
+
+.button-add,
+.form-button-submit,
+.form-button-cancel {
+    padding: 0.5rem 1rem;
+}
+
+.button-add,
+.form-button-submit {
+    background-color: #27ae60;
+}
+
+.button-add:hover,
+.form-button-submit:hover {
+    background-color: #2ecc71;
+}
+
+@media all and (max-width: 720px) {
+
+    .table-div {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .list-actions-button-delete {
+        display: none;
+    }
+}
+
+@media all and (max-width: 450px) {
+
+    .table-div {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .list-actions-button-edit {
+        display: none;
+    } 
+
+    .list-actions-button-delete {
+        display: none;
+    }
+
+    .list-actions-button-details {
+        align-self: center;
+    }
+}

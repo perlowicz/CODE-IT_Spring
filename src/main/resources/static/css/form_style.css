@@ -1,0 +1,88 @@
+button,
+input,
+select,
+label {
+    font-family: inherit;
+    font-size: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+div {
+    margin-top: 3rem;
+    grid-column: 1 / span 2;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 160px 300px 1fr;
+    /* margin-left: 2rem; */
+    gap: 1rem;
+}
+
+.form select,
+.form input[type="text"],
+.form input[type="email"],
+.form input[type="password"],
+.form input[type="date"] {
+    border: 1px solid #7f8c8d;
+    color: #2c3e50;
+    border-radius: 5px;
+    padding: 0.5rem;
+    width: 100%;
+}
+
+.form label {
+    display: block;
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.symbol-required {
+    color: #c0392b;
+}
+
+.form-button-submit,
+.form-button-cancel {
+    width: 100%;
+}
+
+.form-button-cancel {
+    box-sizing: border-box;
+    display: block;
+}
+
+.form-button-submit {
+    margin-bottom: 0.5rem;
+}
+
+.form-buttons {
+    grid-column: 1 / span 2;
+}
+
+
+
+@media all and (max-width: 720px) {
+    .form {
+        grid-template-columns: 1fr;
+        row-gap: unset;
+        margin-left: unset;
+    }
+    .formDiv {
+        grid-column: 1 / 1;
+    }
+}
+
+@media all and (max-width: 450px) {
+
+
+    .form {
+        grid-template-columns: 1fr;
+        row-gap: unset;
+        margin-left: unset;
+    }
+    .formDiv {
+        grid-column: 1 / 1;
+    }
+}

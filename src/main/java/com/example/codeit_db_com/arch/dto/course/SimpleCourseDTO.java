@@ -7,6 +7,9 @@ public class SimpleCourseDTO {
     private String description;
     private Double price;
 
+    public SimpleCourseDTO() {
+    }
+
     public Long getId() {
         return id;
     }

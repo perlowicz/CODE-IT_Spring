@@ -29,7 +29,7 @@ public class CourseService {
         return courseRepository.findById(id).map(courseDTOMapper::map);
     }
 
-    Optional<List<SimpleCourseDTO>> getAllCourses(){
+    public Optional<List<SimpleCourseDTO>> getAllCourses(){
         List<SimpleCourseDTO> resultList = new ArrayList<>();
         courseRepository.findAll().forEach(course -> {
             SimpleCourseDTO simpleCourseDTO = simpleCourseDTOMapper.map(course);

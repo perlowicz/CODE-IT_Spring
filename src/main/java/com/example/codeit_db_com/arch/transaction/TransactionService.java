@@ -39,6 +39,15 @@ public class TransactionService {
         return Optional.of(resultList);
     }
 
+    Optional<List<TransactionDTO>> getAllTransactionsByUserId(Long id){
+        List<TransactionDTO> resultList = new ArrayList<>();
+        transactionRepository.getTransactionByClient_Id(id).forEach(transaction -> {
+            TransactionDTO transactionDTO = transactionDTOMapper.map(transaction);
+            resultList.add(transactionDTO);
+        });
+        return Optional.of(resultList);
+    }
+
     TransactionSaveDTO saveTransaction(TransactionSaveDTO transactionSaveDTO){
         if (transactionSaveDTO.getOpinion() == null) //sytuacja gdy użytkownik nie dodał opinii
             transactionSaveDTO.setOpinion("brak opinii");

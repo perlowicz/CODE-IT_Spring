@@ -3,13 +3,16 @@ package com.example.codeit_db_com.arch.course;
 import com.example.codeit_db_com.arch.dto.course.CourseTransactionDTO;
 import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
-@RestController
+@Controller
 public class CourseController {
 
     private final CourseService courseService;
@@ -25,22 +28,42 @@ public class CourseController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+//    @GetMapping("/courses")
+//    ResponseEntity<List<SimpleCourseDTO>> getAllCourses(){
+//        return courseService.getAllCourses()
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+
     @GetMapping("/courses")
-    ResponseEntity<List<SimpleCourseDTO>> getAllCourses(){
-        return courseService.getAllCourses()
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    String getAllCourses(Model model){
+        Optional<List<SimpleCourseDTO>> allCourses = courseService.getAllCourses();
+        if (allCourses.isPresent() && allCourses.get().size() > 0){
+            model.addAttribute("courses", allCourses.get());
+        }
+        return "pages/course/list";
+    }
+
+    @GetMapping("/courses/add") //redirect from list to form
+    String addNewCourse(){
+        return "pages/course/form";
     }
 
     @PostMapping("/courses")
-    ResponseEntity<SimpleCourseDTO> save(@RequestBody SimpleCourseDTO simpleCourseDTO){
-        SimpleCourseDTO saveCourse = courseService.saveCourse(simpleCourseDTO);
-        URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(saveCourse.getId())
-                .toUri();
-        return ResponseEntity.created(savedClientURI).body(saveCourse);
+    String saveCourse(SimpleCourseDTO simpleCourseDTO){
+        courseService.saveCourse(simpleCourseDTO);
+        return "redirect:courses";
     }
+
+//    @PostMapping("/courses")
+//    ResponseEntity<SimpleCourseDTO> save(@RequestBody SimpleCourseDTO simpleCourseDTO){
+//        SimpleCourseDTO saveCourse = courseService.saveCourse(simpleCourseDTO);
+//        URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(saveCourse.getId())
+//                .toUri();
+//        return ResponseEntity.created(savedClientURI).body(saveCourse);
+//    }
 
     @PutMapping("/courses/{id}")
     ResponseEntity<?> update(@PathVariable Long id,

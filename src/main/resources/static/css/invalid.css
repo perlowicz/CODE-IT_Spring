@@ -1,0 +1,13 @@
+.form input.error-input,
+.form textarea.error-input,
+.form select.error-input {
+    border: 3px solid #e74c3c;
+}
+
+.error-text {
+    display: block;
+    /* font-size: 0.85rem; */
+    line-height: 2.25rem;
+    margin-top: 0.5rem;
+    color: #e74c3c;
+}

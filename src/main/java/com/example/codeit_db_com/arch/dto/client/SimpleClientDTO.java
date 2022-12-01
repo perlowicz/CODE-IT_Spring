@@ -10,6 +10,9 @@ public class SimpleClientDTO {
     private String password;
     private LocalDate registrationDate;
 
+    public SimpleClientDTO() {
+    }
+
     public Long getId() {
         return id;
     }

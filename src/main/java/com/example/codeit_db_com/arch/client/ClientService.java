@@ -24,11 +24,11 @@ public class ClientService {
         this.simpleClientDTOMapper = simpleClientDTOMapper;
     }
 
-    Optional<ClientTransactionDTO> getClientById(Long id){
+    public Optional<ClientTransactionDTO> getClientById(Long id){
         return clientRepository.findById(id).map(clientDTOMapper::map);
     }
 
-    Optional<List<SimpleClientDTO>> getAllClients(){
+    public Optional<List<SimpleClientDTO>> getAllClients(){
         List<SimpleClientDTO> resultList = new ArrayList<>();
         clientRepository.findAll().forEach(client -> {
             SimpleClientDTO simpleClientDTO = simpleClientDTOMapper.map(client);
