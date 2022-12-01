@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>CODE-IT</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+        <link th:href="@{/css/list_style.css}" rel="stylesheet" />
+        <link th:href="@{/css/form_style.css}" rel="stylesheet" />
+    </head>
+    <body>
+
+
+        <div th:insert="fragments/header"></div>
+
+        <main>
+
+            <h3>Szczegóły użytkownika</h3>
+
+        <form class="form" th:if="${client}">
+            <label for="username">Nazwa użytkownika: <span class="symbol-required">*</span></label>
+            <input type="text" style="background-color: lightgray;" name="username" id="username" th:value="${client.userName}" disabled required />
+            <span id="errorUsername"></span>
+            
+            <label for="email">E-mail: <span class="symbol-required">*</span></label>
+            <input type="text" style="background-color: lightgray;" name="email" id="email" th:value="${client.email}" disabled required />
+            <span id="errorEmail"></span>
+
+            <label for="password">Hasło: <span class="symbol-required">*</span></label>
+            <input type="text" style="background-color: lightgray;" name="password" id="password" th:value="${client.password}" disabled required />
+            <span id="errorPassword"></span>
+
+            <label for="registration">Data rejestracji: <span class="symbol-required">*</span></label>
+            <input type="date" style="background-color: lightgray;" name="registration" id="registration" th:value="${client.registrationDate}" disabled required />
+            <span id="errorRegistration"></span>
+
+            <a href="/transactions/edit" class="button-add">Edytuj</a>
+        </form>
+
+        <h3>Zakupione kursy</h3>
+
+            <div class="table-div">
+                <h2 th:unless="${transactions}">Brak zarejestrowanych transakcji dla tego uzytkownika</h2>
+            <table class="table-list" th:if="${transactions}">
+                <thead>
+                    <tr>
+                        <th>Zakupiony kurs</th>
+                        <th>Data zakupu kursu</th>
+                        <th>Data wygaśnięcia kursu</th>
+                        <th>Opinia (opcjonalnie)</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr th:each="transaction : ${transactions}">
+                        <td th:text="${transaction.course.name}"></td>
+                        <td th:text="${transaction.signupDate}"></td>
+                        <td th:text="${transaction.expirationDate}"></td>
+                        <td th:text="${transaction.opinion}"></td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        
+        <div class="returnDiv">
+            <a href="/transactions" class="button-add" >Nowa transakcja</a>
+        </div>
+
+        </main>
+
+        <div th:insert="fragments/footer"></div>
+    </body>
+</html>

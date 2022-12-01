@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>CODE-IT</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+        <link th:href="@{/css/list_style.css}" rel="stylesheet" />
+        <link th:href="@{/css/invalid.css}" rel="stylesheet" />
+        <link th:href="@{/css/form_style.css}" rel="stylesheet" />
+        <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
+        <script type="application/javascript" th:src="@{/js/validationCourseForm.js}"></script>
+    </head>
+    <body>
+
+        <div th:insert="fragments/header"></div>
+
+        <main>
+            <h3>Nowy Kurs</h3>
+
+            <form class="form">
+                <label for="name">Nazwa kursu: <span class="symbol-required">*</span></label>
+                <input type="text" name="name" id="name" class="error-input" required />
+                <span id="errorName" class="error-text">Pole jest wymagane</span>
+
+                <label for="description">Opis: <span class="symbol-required">*</span></label>
+                <textarea id="description" name="description" rows="5" cols="40" class="error-area"></textarea>
+                <span id="errorDescription" class="error-text">Pole jest wymagane</span>
+
+                <label for="price">Cena(zł): <span class="symbol-required">*</span></label>
+                <input type="number" name="price" id="price" min="200" step="50" class="error-input" required />
+                <span id="errorPrice" class="error-text">Pole jest wymagane</span>
+
+                <div>
+                    <p id="errorsSummary"><span class="error-text">Formularz zawiera błędy</span></p>
+                    <input type="submit" value="Dodaj" class="form-button-submit" />
+                    <a href="list.html" class="form-button-cancel">Anuluj</a>
+                </div>
+            </form>
+
+            
+        </main>
+
+        <div th:insert="fragments/footer"></div>
+    </body>
+</html>

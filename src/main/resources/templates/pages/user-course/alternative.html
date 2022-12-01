@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>CODE-IT</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+        <link th:href="@{/css/list_style.css}" rel="stylesheet" />
+        <link th:href="@{/css/invalid.css}" rel="stylesheet" />
+        <link th:href="@{/css/form_style.css}" rel="stylesheet" />
+        <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
+        <script type="application/javascript" th:src="@{/js/validationUser-CourseForm.js}"></script>
+    </head>
+    <body>
+
+
+        <div th:insert="fragments/header"></div>
+
+        <main>
+            <h3>Nowa transakcja</h3>
+
+            <form class="form" method="post" action="/transactions" novalidate onsubmit="return validateForm();">
+
+                <label for="client_name">Użytkownik:</label>
+                <select name="client_name" id="client_name" >
+                    <option th:each="client: ${clients}"
+                    th:text="${client.userName}"></option>
+                </select>
+                <span id="errorUser" class="error-text"></span>
+
+                <label for="course_name">Zakupiony kurs:</label>
+                <select name="course_name" id="course_name">
+                    <option th:each="course: ${courses}"
+                    th:text="${course.name}"></option>
+                </select>
+                <span id="errorCourse" class="error-text"></span>
+
+                <label for="signup">Data zakupu: </label>
+                <input type="date" name="signup" id="signup" />
+                <span id="errorSignup" class="error-text"></span>
+
+                <label for="expiring">Data wygaśnięcia: </label>
+                <input type="date" name="expiring" id="expiring" />
+                <span id="errorExpiring" class="error-text"></span>
+
+                <div class="formDiv">
+                    <p id="errorsSummary" class="error-text"></p>
+                    <input type="submit" value="Zatwiedź" class="form-button-submit"/>
+                    <a href="/transactions/" class="form-button-cancel">Anuluj</a>
+                </div>
+            </form>
+        
+        </main>
+
+        <div th:insert="fragments/footer"></div>
+    </body>
+</html>

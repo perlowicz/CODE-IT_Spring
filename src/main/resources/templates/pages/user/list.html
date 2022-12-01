@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>CODE-IT</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+        <link th:href="@{/css/list_style.css}" rel="stylesheet" />
+        <link th:href="@{/css/invalid.css}" rel="stylesheet" />
+    </head>
+    <body>
+
+        <div th:insert="fragments/header"></div>
+
+
+        <main>
+            <h2>Lista użytkowników</h2>
+            <div class="table-div">
+                <h2 th:unless="${clients}">Brak rekordów do wyświetlenia</h2>
+                <table class="table-list" th:if="${clients}">
+               <thead>
+                <tr>
+                    <th>Nazwa użytkownika</th>
+                    <th>Adres e-mail</th>
+                    <th>Akcje</th>
+                </tr>
+               </thead>
+
+               <tbody>
+               <tr th:each="client: ${clients}">
+                   <td th:text="${client.userName}"></td>
+                   <td th:text="${client.email}"></td>
+                   <td>
+                       <ul class="list-actions">
+                           <li><a th:href="@{'/transactions/' + ${client.id}}" class="list-actions-button-details">Szczegóły</a></li>
+                           <li><a th:href="@{'/clients/' + ${client.id}}" class="list-actions-button-edit">Edytuj</a></li>
+                           <li><a data-th-method="DELETE" th:href="@{'/clients/' + ${client.id}}" class="list-actions-button-delete">Usuń</a></li>
+                       </ul>
+                   </td>
+               </tr>
+               </tbody>
+            </table>
+            </div>
+
+            <p><a href="/clients/add" class="button-add">Dodaj nowego użytkownika</a></p>
+        </main>
+
+        <div th:insert="fragments/footer"></div>
+    </body>
+</html>

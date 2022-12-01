@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <title>CODE-IT</title>
+        <link th:href="@{/css/style.css}" rel="stylesheet" />
+        <link th:href="@{/css/list_style.css}" rel="stylesheet" />
+        <link th:href="@{/css/invalid.css}" rel="stylesheet" />
+        <link th:href="@{/css/form_style.css}" rel="stylesheet" />
+        <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
+        <script type="application/javascript" th:src="@{/js/validationUserForm.js}"></script>
+    </head>
+    <body>
+
+        <div th:insert="fragments/header"></div>
+
+        <main>
+            <h3>Nowy użytkownik</h3>
+
+            <form class="form" method="post" action="/clients" novalidate onsubmit="return validateForm();">
+                <label for="userName">Nazwa użytkownika: <span class="symbol-required">*</span></label>
+                <input type="text" name="userName" id="userName" placeholder="example1234 max 50 znaków" />
+                <span id="errorUsername" class="error-text"></span>
+                
+                <label for="email">E-mail: <span class="symbol-required">*</span></label>
+                <input type="email" name="email" id="email" placeholder="example@gmail.com" />
+                <span id="errorEmail" class="error-text"></span>
+
+                <label for="password">Hasło: <span class="symbol-required">*</span></label>
+                <input type="password" name="password" id="password" />
+                <span id="errorPassword" class="error-text"></span>
+
+                <label for="registration">Data rejestracji: <span class="symbol-required">*</span></label>
+                <input type="date" name="registration" id="registration" />
+                <span id="errorRegistration" class="error-text"></span>
+
+                <div class="formDiv">
+                    <p id="errorsSummary" class="error-text"></p>
+                    <input type="submit" value="Dodaj" class="form-button-submit"/>
+                    <a href="/clients" class="form-button-cancel">Anuluj</a>
+                </div>
+            </form>
+
+            
+        </main>
+
+        <div th:insert="fragments/footer"></div>
+    </body>
+</html>
