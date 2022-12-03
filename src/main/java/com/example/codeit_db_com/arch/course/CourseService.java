@@ -1,9 +1,5 @@
 package com.example.codeit_db_com.arch.course;
 
-import com.example.codeit_db_com.arch.dto.course.CourseTransactionDTO;
-import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
-import com.example.codeit_db_com.arch.mappers.course.CourseDTOMapper;
-import com.example.codeit_db_com.arch.mappers.course.SimpleCourseDTOMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,45 +8,33 @@ import java.util.Optional;
 
 @Service
 public class CourseService {
-
-    private final CourseDTOMapper courseDTOMapper;
     private final CourseRepository courseRepository;
-    private final SimpleCourseDTOMapper simpleCourseDTOMapper;
 
-    public CourseService(CourseDTOMapper courseDTOMapper,
-                         CourseRepository courseRepository,
-                         SimpleCourseDTOMapper simpleCourseDTOMapper) {
-        this.courseDTOMapper = courseDTOMapper;
+    public CourseService(CourseRepository courseRepository) {
         this.courseRepository = courseRepository;
-        this.simpleCourseDTOMapper = simpleCourseDTOMapper;
     }
 
-    Optional<CourseTransactionDTO> getCourseById(Long id){
-        return courseRepository.findById(id).map(courseDTOMapper::map);
+    Optional<Course> getCourseById(Long id){
+        return courseRepository.findById(id);
     }
 
-    public Optional<List<SimpleCourseDTO>> getAllCourses(){
-        List<SimpleCourseDTO> resultList = new ArrayList<>();
-        courseRepository.findAll().forEach(course -> {
-            SimpleCourseDTO simpleCourseDTO = simpleCourseDTOMapper.map(course);
-            resultList.add(simpleCourseDTO);
-        });
+    public Optional<List<Course>> getAllCourses(){
+        List<Course> resultList = new ArrayList<>();
+        courseRepository.findAll().forEach(resultList::add);
         return Optional.of(resultList);
     }
 
-    SimpleCourseDTO saveCourse(SimpleCourseDTO simpleCourseDTO){
-        Course map = simpleCourseDTOMapper.map(simpleCourseDTO);
-        Course savedClient = courseRepository.save(map);
-        return simpleCourseDTOMapper.map(savedClient);
+    Course saveCourse(Course course){
+        Course savedClient = courseRepository.save(course);
+        return savedClient;
     }
 
-    Optional<SimpleCourseDTO> replaceCourse(Long courseId, SimpleCourseDTO simpleCourseDTO){
+    Optional<Course> replaceCourse(Long courseId, Course course){
         if (!courseRepository.existsById(courseId))
             return Optional.empty();
-        simpleCourseDTO.setId(courseId);
-        Course mappedCourse = simpleCourseDTOMapper.map(simpleCourseDTO);
-        Course updatedCourse = courseRepository.save(mappedCourse);
-        return Optional.of(courseDTOMapper.map(updatedCourse));
+        course.setId(courseId);
+        Course updatedCourse = courseRepository.save(course);
+        return Optional.of(updatedCourse);
     }
 
     void deleteCourse(Long id){

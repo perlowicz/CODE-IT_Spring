@@ -1,9 +1,5 @@
 package com.example.codeit_db_com.arch.client;
 
-import com.example.codeit_db_com.arch.dto.client.ClientTransactionDTO;
-import com.example.codeit_db_com.arch.dto.client.SimpleClientDTO;
-import com.example.codeit_db_com.arch.mappers.client.ClientDTOMapper;
-import com.example.codeit_db_com.arch.mappers.client.SimpleClientDTOMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,44 +11,38 @@ import java.util.Optional;
 public class ClientService {
 
     private final ClientRepository clientRepository;
-    private final ClientDTOMapper clientDTOMapper;
-    private final SimpleClientDTOMapper simpleClientDTOMapper;
 
-    public ClientService(ClientRepository clientRepository, ClientDTOMapper clientDTOMapper, SimpleClientDTOMapper simpleClientDTOMapper) {
+    public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        this.clientDTOMapper = clientDTOMapper;
-        this.simpleClientDTOMapper = simpleClientDTOMapper;
     }
 
-    public Optional<ClientTransactionDTO> getClientById(Long id){
-        return clientRepository.findById(id).map(clientDTOMapper::map);
+    public Optional<Client> getClientById(Long id){
+        return clientRepository.findById(id);
     }
 
-    public Optional<List<SimpleClientDTO>> getAllClients(){
-        List<SimpleClientDTO> resultList = new ArrayList<>();
-        clientRepository.findAll().forEach(client -> {
-            SimpleClientDTO simpleClientDTO = simpleClientDTOMapper.map(client);
-            resultList.add(simpleClientDTO);
-        });
+    public Optional<List<Client>> getAllClients(){
+        List<Client> resultList = new ArrayList<>();
+        clientRepository.findAll().forEach(resultList::add);
         return Optional.of(resultList);
     }
 
-    SimpleClientDTO saveClient(SimpleClientDTO simpleClientDTO){
-        Client map = simpleClientDTOMapper.map(simpleClientDTO);
-        Client savedClient = clientRepository.save(map);
-        return simpleClientDTOMapper.map(savedClient);
+    Client saveClient(Client client){
+        Client savedClient = clientRepository.save(client);
+        return savedClient;
     }
 
-    Optional<SimpleClientDTO> replaceClient(Long clientId, SimpleClientDTO simpleClientDTO){
-        if (!clientRepository.existsById(clientId))
+    Optional<Client> replaceClient(Client client){
+        if (!clientRepository.existsById(client.getId()))
             return Optional.empty();
-        simpleClientDTO.setId(clientId);
-        simpleClientDTO.setRegistrationDate(LocalDate.now());
-        Client clientToUpdate = simpleClientDTOMapper.map(simpleClientDTO);
-        Client updatedEntity = clientRepository.save(clientToUpdate);
-        return Optional.of(simpleClientDTOMapper.map(updatedEntity));
+//        client.setId(clientId);
+//        client.setRegistrationDate(LocalDate.now());
+        Client updatedEntity = clientRepository.save(client);
+        return Optional.of(updatedEntity);
     }
 
+    public Optional<Client> getClientEntityById(Long id){
+        return clientRepository.findById(id);
+    }
     void deleteClient(Long id){
         clientRepository.deleteById(id);
     }

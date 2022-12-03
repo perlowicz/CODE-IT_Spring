@@ -1,14 +1,9 @@
 package com.example.codeit_db_com.arch.client;
 
-import com.example.codeit_db_com.arch.dto.client.ClientTransactionDTO;
-import com.example.codeit_db_com.arch.dto.client.SimpleClientDTO;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -39,7 +34,7 @@ public class ClientController {
 
     @GetMapping("/clients")
     public String getAllClients(Model model){
-        Optional<List<SimpleClientDTO>> allClients = clientService.getAllClients();
+        Optional<List<Client>> allClients = clientService.getAllClients();
         if (allClients.isPresent() && allClients.get().size() > 0){
             model.addAttribute("clients", allClients.orElse(Collections.emptyList()));
         }
@@ -52,8 +47,8 @@ public class ClientController {
     }
 
     @PostMapping("/clients")
-    String saveClient(SimpleClientDTO simpleClientDTO){
-        clientService.saveClient(simpleClientDTO);
+    String saveClient(Client client){
+        clientService.saveClient(client);
         return "redirect:clients";
     }
 
@@ -75,17 +70,18 @@ public class ClientController {
 //                .orElse(ResponseEntity.notFound().build());
 //    }
 
-    @GetMapping("/clients/{id}")
+    @GetMapping("/clients/{id}") //redirect from list to form-edit
     String update(@PathVariable Long id, Model model){
-        Optional<ClientTransactionDTO> clientById = clientService.getClientById(id);
+        Optional<Client> clientById = clientService.getClientById(id);
         if (clientById.isPresent())
             model.addAttribute("client", clientById.get());
         return "pages/user/form-edit";
     }
 
-    @PutMapping("/clients/{id}")
-    String updateClient(@PathVariable Long id, SimpleClientDTO simpleClientDTO){
-        clientService.replaceClient(id, simpleClientDTO);
+    @PostMapping("/clients/{id}") //replacing client controller
+    String updateClient(@PathVariable Long id, Client client){
+//        clientService.replaceClient(id, client);
+        clientService.replaceClient(client);
         return "redirect:clients";
     }
 

@@ -18,7 +18,7 @@
         <main>
             <h3>Edycja użytkownika</h3>
 
-            <form class="form" method="put" th:action="@{'/clients/' + ${client.id}}" novalidate onsubmit="return validateForm();">
+            <form class="form" method="post" th:action="/clients" novalidate onsubmit="return validateForm();">
                 <label for="userName">Nazwa użytkownika: <span class="symbol-required">*</span></label>
                 <input type="text" name="userName" id="userName" th:value="${client.userName}" required />
                 <span id="errorUsername" class="error-text"></span>
@@ -32,13 +32,13 @@
                 <span id="errorPassword" class="error-text"></span>
 
                 <label for="registrationDate">Data rejestracji: <span class="symbol-required">*</span></label>
-                <input type="date" style="background-color: lightgray;" name="registrationDate" id="registrationDate" th:value="${client.registrationDate}" disabled required />
+                <input type="date" style="background-color: lightgray;" name="registrationDate" id="registrationDate" th:value="${client.registrationDate}" required />
                 <span id="errorRegistration" class="error-text"></span>
 
                 <div class="formDiv">
                     <p id="errorsSummary" class="error-text"></p>
                     <input type="submit" value="Zatwierdź" class="form-button-submit"/>
-                    <a href="/users" class="form-button-cancel">Anuluj</a>
+                    <a href="/clients" class="form-button-cancel">Anuluj</a>
                 </div>
             </form>
 

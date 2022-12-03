@@ -25,13 +25,13 @@ public class CodeItDbComApplication {
         Client client2 = clientRepository.findById(2L).get();
         Course course1 = courseRepository.findById(1L).get();
         Course course2 = courseRepository.findById(2L).get();
-        Transaction transaction = new Transaction(client1, course1, LocalDate.EPOCH, LocalDate.MAX, "Good opinion");
-        Transaction secondTransaction = new Transaction(client1, course2, LocalDate.EPOCH, LocalDate.MAX, "Bad opinion");
-        Transaction thirdTransaction = new Transaction(client2, course2, LocalDate.EPOCH, LocalDate.MAX, "Cośtam");
+//        Transaction transaction = new Transaction(client1, course1, LocalDate.EPOCH, LocalDate.MAX, "Good opinion");
+//        Transaction secondTransaction = new Transaction(client1, course2, LocalDate.EPOCH, LocalDate.MAX, "Bad opinion");
+//        Transaction thirdTransaction = new Transaction(client2, course2, LocalDate.EPOCH, LocalDate.MAX, "Cośtam");
 
-        transactionRepository.save(transaction);
-        transactionRepository.save(secondTransaction);
-        transactionRepository.save(thirdTransaction);
+//        transactionRepository.save(transaction);
+//        transactionRepository.save(secondTransaction);
+//        transactionRepository.save(thirdTransaction);
 //        System.out.println(client1);
 //        System.out.println(course1);
 //        client1.addTransaction(course1);

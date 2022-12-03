@@ -1,14 +1,10 @@
 package com.example.codeit_db_com.arch.course;
 
-import com.example.codeit_db_com.arch.dto.course.CourseTransactionDTO;
-import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,7 +18,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/{id}")
-    ResponseEntity<CourseTransactionDTO> getCourseById(@PathVariable Long id){
+    ResponseEntity<Course> getCourseById(@PathVariable Long id){
         return courseService.getCourseById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -37,7 +33,7 @@ public class CourseController {
 
     @GetMapping("/courses")
     String getAllCourses(Model model){
-        Optional<List<SimpleCourseDTO>> allCourses = courseService.getAllCourses();
+        Optional<List<Course>> allCourses = courseService.getAllCourses();
         if (allCourses.isPresent() && allCourses.get().size() > 0){
             model.addAttribute("courses", allCourses.get());
         }
@@ -50,8 +46,8 @@ public class CourseController {
     }
 
     @PostMapping("/courses")
-    String saveCourse(SimpleCourseDTO simpleCourseDTO){
-        courseService.saveCourse(simpleCourseDTO);
+    String saveCourse(Course course){
+        courseService.saveCourse(course);
         return "redirect:courses";
     }
 
@@ -67,8 +63,8 @@ public class CourseController {
 
     @PutMapping("/courses/{id}")
     ResponseEntity<?> update(@PathVariable Long id,
-                             @RequestBody SimpleCourseDTO simpleCourseDTO){
-        return courseService.replaceCourse(id, simpleCourseDTO)
+                             @RequestBody Course course){
+        return courseService.replaceCourse(id, course)
                 .map(c -> ResponseEntity.noContent().build())
                 .orElse(ResponseEntity.notFound().build());
     }

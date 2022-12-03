@@ -28,7 +28,7 @@
                        <td th:text="${course.name}"></td>
                        <td>
                            <ul class="list-actions">
-                               <li><a href="/transactions/" class="list-actions-button-details">Szczegóły</a></li>
+                               <li><a th:href="@{'/transactions/' + ${course.id}}" class="list-actions-button-details">Szczegóły</a></li>
                                <li><a href="/courses/edit" class="list-actions-button-edit">Edytuj</a></li>
                                <li><a href="/clients/" class="list-actions-button-delete">Usuń</a></li>
                            </ul>

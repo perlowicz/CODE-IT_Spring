@@ -1,12 +1,11 @@
 package com.example.codeit_db_com.arch.transaction;
 
 import com.example.codeit_db_com.arch.client.Client;
-import com.example.codeit_db_com.arch.client.ClientDTO;
 import com.example.codeit_db_com.arch.course.Course;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Optional;
 
 @Entity
 @Table(name = "transaction")
@@ -29,7 +28,9 @@ public class Transaction {
             name = "course_id"
     )
     private Course course;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate signupDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate expirationDate;
     private String opinion;
 
@@ -94,5 +95,17 @@ public class Transaction {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Transaction{" +
+                "id=" + id +
+                ", client=" + client +
+                ", course=" + course +
+                ", signupDate=" + signupDate +
+                ", expirationDate=" + expirationDate +
+                ", opinion='" + opinion + '\'' +
+                '}';
     }
 }

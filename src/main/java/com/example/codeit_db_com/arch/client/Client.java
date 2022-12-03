@@ -1,16 +1,13 @@
 package com.example.codeit_db_com.arch.client;
 
 
-import com.example.codeit_db_com.arch.course.Course;
 import com.example.codeit_db_com.arch.transaction.Transaction;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "client")
@@ -22,6 +19,7 @@ public class Client {
     private String userName;
     private String email;
     private String password;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate registrationDate;
     @OneToMany(
             mappedBy = "client",

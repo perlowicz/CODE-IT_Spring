@@ -1,15 +1,15 @@
 package com.example.codeit_db_com.arch.transaction;
 
+import com.example.codeit_db_com.arch.client.Client;
 import com.example.codeit_db_com.arch.client.ClientService;
+import com.example.codeit_db_com.arch.course.Course;
 import com.example.codeit_db_com.arch.course.CourseService;
-import com.example.codeit_db_com.arch.dto.client.ClientTransactionDTO;
-import com.example.codeit_db_com.arch.dto.client.SimpleClientDTO;
-import com.example.codeit_db_com.arch.dto.course.SimpleCourseDTO;
-import com.example.codeit_db_com.arch.dto.transaction.TransactionDTO;
-import com.example.codeit_db_com.arch.dto.transaction.TransactionSaveDTO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
@@ -32,11 +32,14 @@ public class TransactionController {
 
     @GetMapping("/transactions/{id}")
     String getTransactionById(@PathVariable Long id, Model model){
-        Optional<List<TransactionDTO>> allTransactionsByUserId = transactionService.getAllTransactionsByUserId(id);
-        if (allTransactionsByUserId.isPresent()) {
-            SimpleClientDTO client = allTransactionsByUserId.get().get(0).getClient();
-            model.addAttribute("client", client);
+        Optional<List<Transaction>> allTransactionsByUserId = transactionService.getAllTransactionsByUserId(id);
+        if (allTransactionsByUserId.isPresent() && allTransactionsByUserId.get().size() > 0) {
+            Optional<Client> clientEntityById = clientService.getClientEntityById(id);
+            model.addAttribute("client", clientEntityById.get());
             model.addAttribute("transactions", allTransactionsByUserId.get());
+        } else {
+            Optional<Client> clientEntityById = clientService.getClientEntityById(id);
+            model.addAttribute("client", clientEntityById.get());
         }
         return "pages/user-course/details";
     }
@@ -50,8 +53,8 @@ public class TransactionController {
 
     @GetMapping("/transactions")
     String getAllTransactions(Model model){
-        Optional<List<SimpleClientDTO>> allClients = clientService.getAllClients();
-        Optional<List<SimpleCourseDTO>> allCourses = courseService.getAllCourses();
+        Optional<List<Client>> allClients = clientService.getAllClients();
+        Optional<List<Course>> allCourses = courseService.getAllCourses();
         if (allClients.isPresent() && allCourses.isPresent()){
             model.addAttribute("clients", allClients.get());
             model.addAttribute("courses", allCourses.get());
@@ -60,8 +63,7 @@ public class TransactionController {
     }
 
     @PostMapping("/transactions")
-    String saveTransaction(TransactionSaveDTO transactionSaveDTO){
-        transactionService.saveTransaction(transactionSaveDTO);
+    String saveTransaction(@ModelAttribute("clients") Client client){
         return "redirect:transactions";
     }
 
