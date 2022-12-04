@@ -1,5 +1,7 @@
-package com.example.codeit_db_com.arch.course;
+package com.example.codeit_db_com.arch.service;
 
+import com.example.codeit_db_com.arch.repositories.CourseRepository;
+import com.example.codeit_db_com.arch.entities.Course;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,12 +28,12 @@ public class CourseService {
         return Optional.of(resultList);
     }
 
-    Course saveCourse(Course course){
+    public Course saveCourse(Course course){
         Course savedClient = courseRepository.save(course);
         return savedClient;
     }
 
-    Optional<Course> replaceCourse(Course course){
+    public Optional<Course> replaceCourse(Course course){
         if (!courseRepository.existsById(course.getId()))
             return Optional.empty();
         Course updatedCourse = courseRepository.save(course);
@@ -42,7 +44,7 @@ public class CourseService {
         return courseRepository.findCourseByName(name);
     }
 
-    void deleteCourse(Long id){
+    public void deleteCourse(Long id){
         courseRepository.deleteById(id);
     }
 

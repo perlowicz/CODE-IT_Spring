@@ -1,10 +1,12 @@
-package com.example.codeit_db_com.arch.transaction;
+package com.example.codeit_db_com.arch.service;
 
-import com.example.codeit_db_com.arch.client.Client;
-import com.example.codeit_db_com.arch.client.ClientRepository;
-import com.example.codeit_db_com.arch.course.Course;
-import com.example.codeit_db_com.arch.course.CourseRepository;
+import com.example.codeit_db_com.arch.entities.Client;
+import com.example.codeit_db_com.arch.repositories.ClientRepository;
+import com.example.codeit_db_com.arch.entities.Course;
+import com.example.codeit_db_com.arch.repositories.CourseRepository;
 import com.example.codeit_db_com.arch.dto.TransactionSaveDTO;
+import com.example.codeit_db_com.arch.entities.Transaction;
+import com.example.codeit_db_com.arch.repositories.TransactionRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -37,19 +39,19 @@ public class TransactionService {
         return Optional.of(resultList);
     }
 
-    Optional<List<Transaction>> getAllTransactionsByUserId(Long id){
+    public Optional<List<Transaction>> getAllTransactionsByUserId(Long id){
         List<Transaction> transactionList = new ArrayList<>();
         transactionRepository.getTransactionByClient_Id(id).forEach(transactionList::add);
         return Optional.of(transactionList);
     }
 
-    Optional<List<Transaction>> getAllTransactionsByCourseId(Long id){
+    public Optional<List<Transaction>> getAllTransactionsByCourseId(Long id){
         List<Transaction> transactionList = new ArrayList<>();
         transactionRepository.getTransactionByCourse_Id(id).forEach(transactionList::add);
         return Optional.of(transactionList);
     }
 
-    Transaction saveTransaction(TransactionSaveDTO transactionSaveDTO){
+    public Transaction saveTransaction(TransactionSaveDTO transactionSaveDTO){
         Optional<Client> clientByUserName = clientRepository.findByUserName(transactionSaveDTO.getClientName());
         Optional<Course> courseByName = courseRepository.findCourseByName(transactionSaveDTO.getCourseName());
         Transaction transaction = new Transaction();

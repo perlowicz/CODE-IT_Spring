@@ -1,21 +1,23 @@
-package com.example.codeit_db_com.arch.client;
+package com.example.codeit_db_com.arch.service;
 
+import com.example.codeit_db_com.arch.repositories.ClientRepository;
+import com.example.codeit_db_com.arch.entities.Client;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 public class ClientService {
 
     private final ClientRepository clientRepository;
+    private final Validator validator;
 
-    public ClientService(ClientRepository clientRepository) {
+    public ClientService(ClientRepository clientRepository, Validator validator) {
         this.clientRepository = clientRepository;
+        this.validator = validator;
     }
 
     public Optional<Client> getClientById(Long id){
@@ -28,12 +30,12 @@ public class ClientService {
         return Optional.of(resultList);
     }
 
-    Client saveClient(Client client){
+    public Client saveClient(Client client){
         Client savedClient = clientRepository.save(client);
         return savedClient;
     }
 
-    Optional<Client> replaceClient(Client client){
+    public Optional<Client> replaceClient(Client client){
         if (!clientRepository.existsById(client.getId())) {
             return Optional.empty();
         }
@@ -48,7 +50,7 @@ public class ClientService {
     public Optional<Client> getClientEntityById(Long id){
         return clientRepository.findById(id);
     }
-    void deleteClient(Long id){
+    public void deleteClient(Long id){
         clientRepository.deleteById(id);
     }
 

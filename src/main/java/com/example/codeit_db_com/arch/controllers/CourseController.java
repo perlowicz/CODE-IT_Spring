@@ -1,6 +1,7 @@
-package com.example.codeit_db_com.arch.course;
+package com.example.codeit_db_com.arch.controllers;
 
-import org.springframework.http.ResponseEntity;
+import com.example.codeit_db_com.arch.entities.Course;
+import com.example.codeit_db_com.arch.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

@@ -1,13 +1,10 @@
-package com.example.codeit_db_com.arch.course;
-
-import com.example.codeit_db_com.arch.client.Client;
-import com.example.codeit_db_com.arch.transaction.Transaction;
+package com.example.codeit_db_com.arch.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Objects;
 
 @Entity
 @Table(name = "course")
@@ -16,9 +13,22 @@ public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 2, max = 50)
     private String name;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 50, max = 200)
     private String description;
+
+    @NotNull
+    @Positive
+    @Min(value = 200)
     private Double price;
+
     @OneToMany(
             mappedBy = "course",
             fetch = FetchType.EAGER,
@@ -87,5 +97,22 @@ public class Course {
                 ", description='" + description + '\'' +
                 ", price=" + price +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id.equals(course.id) &&
+                name.equals(course.name) &&
+                description.equals(course.description) &&
+                price.equals(course.price) &&
+                Objects.equals(transactions, course.transactions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, price, transactions);
     }
 }

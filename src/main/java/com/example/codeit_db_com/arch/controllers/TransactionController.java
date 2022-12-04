@@ -1,10 +1,12 @@
-package com.example.codeit_db_com.arch.transaction;
+package com.example.codeit_db_com.arch.controllers;
 
-import com.example.codeit_db_com.arch.client.Client;
-import com.example.codeit_db_com.arch.client.ClientService;
-import com.example.codeit_db_com.arch.course.Course;
-import com.example.codeit_db_com.arch.course.CourseService;
+import com.example.codeit_db_com.arch.entities.Client;
+import com.example.codeit_db_com.arch.service.ClientService;
+import com.example.codeit_db_com.arch.entities.Course;
+import com.example.codeit_db_com.arch.service.CourseService;
 import com.example.codeit_db_com.arch.dto.TransactionSaveDTO;
+import com.example.codeit_db_com.arch.entities.Transaction;
+import com.example.codeit_db_com.arch.service.TransactionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

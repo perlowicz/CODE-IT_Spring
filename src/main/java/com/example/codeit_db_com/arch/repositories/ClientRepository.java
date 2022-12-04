@@ -1,6 +1,6 @@
-package com.example.codeit_db_com.arch.client;
+package com.example.codeit_db_com.arch.repositories;
 
-import org.springframework.data.jpa.repository.Query;
+import com.example.codeit_db_com.arch.entities.Client;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

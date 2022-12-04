@@ -1,13 +1,13 @@
-package com.example.codeit_db_com.arch.client;
+package com.example.codeit_db_com.arch.entities;
 
-
-import com.example.codeit_db_com.arch.transaction.Transaction;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "client")
@@ -16,11 +16,28 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 7, max = 50)
     private String userName;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 5, max = 100)
+    @Email
     private String email;
+
+    @NotNull
+    @NotBlank
+    @Size(min = 8, max = 20)
     private String password;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull
+    @PastOrPresent
     private LocalDate registrationDate;
+
     @OneToMany(
             mappedBy = "client",
             fetch = FetchType.EAGER,
@@ -99,5 +116,22 @@ public class Client {
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return id.equals(client.id) && userName.equals(client.userName) &&
+                email.equals(client.email) &&
+                password.equals(client.password) &&
+                registrationDate.equals(client.registrationDate) &&
+                Objects.equals(transactions, client.transactions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, email, password, registrationDate, transactions);
     }
 }

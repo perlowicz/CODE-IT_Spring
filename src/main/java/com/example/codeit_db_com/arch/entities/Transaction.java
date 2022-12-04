@@ -1,11 +1,13 @@
-package com.example.codeit_db_com.arch.transaction;
+package com.example.codeit_db_com.arch.entities;
 
-import com.example.codeit_db_com.arch.client.Client;
-import com.example.codeit_db_com.arch.course.Course;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "transaction")
@@ -14,6 +16,7 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.ALL
@@ -21,7 +24,9 @@ public class Transaction {
     @JoinColumn(
             name = "client_id"
     )
+    @NotNull
     private Client client;
+
     @ManyToOne(
             fetch = FetchType.EAGER,
             cascade = CascadeType.PERSIST
@@ -29,11 +34,18 @@ public class Transaction {
     @JoinColumn(
             name = "course_id"
     )
+    @NotNull
     private Course course;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @PastOrPresent
     private LocalDate signupDate;
+
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Past
     private LocalDate expirationDate;
+
+
     private String opinion;
 
     public Transaction(Client client,
@@ -48,8 +60,7 @@ public class Transaction {
         this.opinion = opinion;
     }
 
-    public Transaction() {
-    }
+    public Transaction() { }
 
     public Client getClient() {
         return client;
@@ -109,5 +120,23 @@ public class Transaction {
                 ", expirationDate=" + expirationDate +
                 ", opinion='" + opinion + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Transaction that = (Transaction) o;
+        return id.equals(that.id) &&
+                client.equals(that.client) &&
+                course.equals(that.course) &&
+                signupDate.equals(that.signupDate) &&
+                expirationDate.equals(that.expirationDate) &&
+                Objects.equals(opinion, that.opinion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, client, course, signupDate, expirationDate, opinion);
     }
 }

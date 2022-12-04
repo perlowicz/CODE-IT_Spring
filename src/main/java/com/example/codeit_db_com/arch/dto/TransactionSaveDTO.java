@@ -1,4 +1,5 @@
 package com.example.codeit_db_com.arch.dto;
+//class made for Thymeleaf stuff needs
 
 public class TransactionSaveDTO {
 
