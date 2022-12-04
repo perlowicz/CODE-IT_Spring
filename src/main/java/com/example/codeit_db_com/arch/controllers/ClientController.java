@@ -4,8 +4,10 @@ import com.example.codeit_db_com.arch.entities.Client;
 import com.example.codeit_db_com.arch.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +32,8 @@ public class ClientController {
     }
 
     @GetMapping("/clients/add") //redirect from list to form
-    public String addNewClient(){
+    public String addNewClient(Model model){
+        model.addAttribute("client", new Client());
         return "pages/user/form";
     }
 
@@ -43,15 +46,23 @@ public class ClientController {
     }
 
     @PostMapping("/clients") //adding new client
-    String saveClient(Client client){
-        clientService.saveClient(client);
-        return "redirect:/clients";
+    String saveClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "pages/user/form";
+        } else {
+            clientService.saveClient(client);
+            return "redirect:/clients";
+        }
     }
 
     @PostMapping("/clients/edit/{id}") //replacing client
-    String updateClient(Client client){
-        clientService.replaceClient(client);
-        return "redirect:/clients";
+    String updateClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "pages/user/form-edit";
+        } else {
+            clientService.replaceClient(client);
+            return "redirect:/clients";
+        }
     }
 
     @GetMapping("/clients/delete/{id}")
