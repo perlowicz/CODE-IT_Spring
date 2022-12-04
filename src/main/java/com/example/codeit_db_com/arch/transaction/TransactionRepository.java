@@ -8,4 +8,5 @@ import java.util.Optional;
 
 public interface TransactionRepository extends CrudRepository<Transaction, Long> {
     List<Transaction> getTransactionByClient_Id(Long id);
+    List<Transaction> getTransactionByCourse_Id(Long id);
 }

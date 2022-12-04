@@ -33,8 +33,8 @@
                    <td>
                        <ul class="list-actions">
                            <li><a th:href="@{'/transactions/' + ${client.id}}" class="list-actions-button-details">Szczegóły</a></li>
-                           <li><a th:href="@{'/clients/' + ${client.id}}" class="list-actions-button-edit">Edytuj</a></li>
-                           <li><a data-th-method="DELETE" th:href="@{'/clients/' + ${client.id}}" class="list-actions-button-delete">Usuń</a></li>
+                           <li><a th:href="@{'/clients/edit/' + ${client.id}}" class="list-actions-button-edit">Edytuj</a></li>
+                           <li><a th:href="@{'/clients/delete/' + ${client.id}}" class="list-actions-button-delete">Usuń</a></li>
                        </ul>
                    </td>
                </tr>

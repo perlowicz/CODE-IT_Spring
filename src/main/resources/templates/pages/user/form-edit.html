@@ -8,17 +8,17 @@
         <link th:href="@{/css/list_style.css}" rel="stylesheet" />
         <link th:href="@{/css/invalid.css}" rel="stylesheet" />
         <link th:href="@{/css/form_style.css}" rel="stylesheet" />
-        <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
-        <script type="application/javascript" th:src="@{/js/validationUserForm.js}"></script>
     </head>
     <body>
 
         <div th:insert="fragments/header"></div>
 
         <main>
+            <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>
+            <script type="text/javascript" th:src="@{/js/validationUserForm.js}"></script>
             <h3>Edycja użytkownika</h3>
 
-            <form class="form" method="post" th:action="/clients" novalidate onsubmit="return validateForm();">
+            <form class="form" method="post" th:action="@{'/clients/edit/' + ${client.id}}" novalidate onsubmit="return validateForm();">
                 <label for="userName">Nazwa użytkownika: <span class="symbol-required">*</span></label>
                 <input type="text" name="userName" id="userName" th:value="${client.userName}" required />
                 <span id="errorUsername" class="error-text"></span>

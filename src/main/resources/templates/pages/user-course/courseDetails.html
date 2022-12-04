@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pl" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>CODE-IT</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+    <link th:href="@{/css/list_style.css}" rel="stylesheet" />
+    <link th:href="@{/css/form_style.css}" rel="stylesheet" />
+</head>
+<body>
+
+
+<div th:insert="fragments/header"></div>
+
+<main>
+
+    <h3>Szczegóły kursu</h3>
+
+    <form class="form" th:if="${course}">
+        <label for="courseName">Nazwa kursu: <span class="symbol-required">*</span></label>
+        <input type="text" style="background-color: lightgray;" name="courseName" id="courseName" th:value="${course.name}" disabled required />
+        <span id="errorName"></span>
+
+        <label for="description">Opis: <span class="symbol-required">*</span></label>
+        <textarea rows="5" cols="40" style="background-color: lightgray;" name="description" id="description" th:text="${course.description}" disabled required></textarea>
+        <span id="errorDescription"></span>
+
+        <label for="price">Cena: <span class="symbol-required">*</span></label>
+        <input type="number" style="background-color: lightgray;" name="price" id="price" th:value="${course.price}" disabled required />
+        <span id="errorPrice"></span>
+
+        <a th:href="@{'/courses/edit/' + ${course.id}}" class="button-add">Edytuj</a>
+    </form>
+
+    <h3>Powiazane transakcje</h3>
+
+    <div class="table-div">
+        <h2 th:unless="${transactions}">Brak zarejestrowanych transakcji dla tego użytkownika</h2>
+        <table class="table-list" th:if="${transactions}">
+            <thead>
+            <tr>
+                <th>Użytkownik który zakupił kurs</th>
+                <th>Data zakupu kursu</th>
+                <th>Data wygaśnięcia kursu</th>
+                <th>Opinia (opcjonalnie)</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <tr th:each="transaction : ${transactions}">
+                <td th:text="${transaction.client.userName}"></td>
+                <td th:text="${transaction.signupDate}"></td>
+                <td th:text="${transaction.expirationDate}"></td>
+                <td th:text="${transaction.opinion}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="returnDiv">
+        <a href="/transactions" class="button-add" >Nowa transakcja</a>
+    </div>
+
+</main>
+
+<div th:insert="fragments/footer"></div>
+</body>
+</html>

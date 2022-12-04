@@ -8,14 +8,14 @@
     <link th:href="@{/css/list_style.css}" rel="stylesheet" />
     <link th:href="@{/css/invalid.css}" rel="stylesheet" />
     <link th:href="@{/css/form_style.css}" rel="stylesheet" />
-    <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
-    <script type="application/javascript" th:src="@{/js/validationCourseForm.js}"></script>
 </head>
 <body>
 
 <div th:insert="fragments/header"></div>
 
 <main>
+    <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>
+    <script type="text/javascript" th:src="@{/js/validationCourseForm.js}"></script>
     <h3>Nowy kurs</h3>
 
     <form class="form" method="post" action="/courses" novalidate onsubmit="return validateForm();">

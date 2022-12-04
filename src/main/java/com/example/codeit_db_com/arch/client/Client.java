@@ -24,7 +24,7 @@ public class Client {
     @OneToMany(
             mappedBy = "client",
             fetch = FetchType.EAGER,
-            cascade = CascadeType.REMOVE
+            cascade = CascadeType.PERSIST
     )
     private List<Transaction> transactions = new ArrayList<>();
 
@@ -101,61 +101,3 @@ public class Client {
                 '}';
     }
 }
-
-//    <?xml version="1.0" encoding="UTF-8"?>
-//<databaseChangeLog
-//        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
-//                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-//                xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-//                https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
-//<changeSet id="0001" author="perlowicz">
-//<createTable tableName="client">
-//<column name="id" type="BIGINT" autoIncrement="true">
-//<constraints nullable="false" primaryKey="true"/>
-//</column>
-//<column name="user_name" type="VARCHAR(50)"/>
-//<column name="email" type="VARCHAR(100)"/>
-//<column name="password" type="VARCHAR(100)"/>
-//<column name="registration_date" type="DATE"/>
-//</createTable>
-//</changeSet>
-//<changeSet id="0002" author="perlowicz">
-//<createTable tableName="course">
-//<column name="id" type="BIGINT" autoIncrement="true">
-//<constraints nullable="false" primaryKey="true"/>
-//</column>
-//<column name="name" type="VARCHAR(50)"/>
-//<column name="description" type="VARCHAR(200)"/>
-//<column name="price" type="DOUBLE"/>
-//</createTable>
-//</changeSet>
-//<changeSet id="0003" author="perlowicz">
-//<createTable tableName="client_courses">
-//<column name="id" type="BIGINT" autoIncrement="true">
-//<constraints nullable="false" primaryKey="true"/>
-//</column>
-//<column name="client_id" type="BIGINT">
-//<constraints nullable="false"/>
-//</column>
-//<column name="course_id" type="VARCHAR(200)">
-//<constraints nullable="false"/>
-//</column>
-//<column name="signup_date" type="DATE"/>
-//<column name="expiration_date" type="DATE"/>
-//<column name="opinion" type="VARCHAR(200)">
-//<constraints nullable="true"/>
-//</column>
-//</createTable>
-//<addForeignKeyConstraint baseTableName="client_course"
-//        baseColumnNames="client_id"
-//        constraintName="fk_client_id"
-//        referencedTableName="client"
-//        referencedColumnNames="id"/>
-//<addForeignKeyConstraint baseTableName="client_course"
-//        baseColumnNames="course_id"
-//        constraintName="fk_course_id"
-//        referencedTableName="course"
-//        referencedColumnNames="id"/>
-//</changeSet>
-//<include file="../testdata/data.sql" relativeToChangelogFile="true"/>
-//</databaseChangeLog>

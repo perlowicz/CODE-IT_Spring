@@ -3,8 +3,10 @@ package com.example.codeit_db_com.arch.course;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CourseService {
@@ -14,7 +16,7 @@ public class CourseService {
         this.courseRepository = courseRepository;
     }
 
-    Optional<Course> getCourseById(Long id){
+    public Optional<Course> getCourseById(Long id){
         return courseRepository.findById(id);
     }
 
@@ -29,15 +31,26 @@ public class CourseService {
         return savedClient;
     }
 
-    Optional<Course> replaceCourse(Long courseId, Course course){
-        if (!courseRepository.existsById(courseId))
+    Optional<Course> replaceCourse(Course course){
+        if (!courseRepository.existsById(course.getId()))
             return Optional.empty();
-        course.setId(courseId);
         Course updatedCourse = courseRepository.save(course);
         return Optional.of(updatedCourse);
     }
 
+    public Optional<Course> getCourseByName(String name){
+        return courseRepository.findCourseByName(name);
+    }
+
     void deleteCourse(Long id){
         courseRepository.deleteById(id);
+    }
+
+    public List<String> getAllCoursesNames(){
+        Optional<List<Course>> courses = getAllCourses();
+        if (courses.isPresent())
+            return courses.get().stream().map(Course::getName).collect(Collectors.toList());
+        else
+            return Collections.emptyList();
     }
 }

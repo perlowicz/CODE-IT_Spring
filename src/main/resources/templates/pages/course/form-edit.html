@@ -8,33 +8,32 @@
         <link th:href="@{/css/list_style.css}" rel="stylesheet" />
         <link th:href="@{/css/invalid.css}" rel="stylesheet" />
         <link th:href="@{/css/form_style.css}" rel="stylesheet" />
-        <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
     </head>
     <body>
 
         <div th:insert="fragments/header"></div>
 
         <main>
+            <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>
             <h3>Edycja kursu</h3>
 
-            <form class="form">
+            <form class="form" method="post" th:action="@{'/courses/edit/' + ${course.id}}" novalidate onsubmit="return validateForm();">
                 <label for="name">Nazwa kursu: <span class="symbol-required">*</span></label>
-                <input type="text" name="name" id="name" value="Java" required />
+                <input type="text" name="name" id="name" th:value="${course.name}" required />
                 <span id="errorName"></span>
                 
                 <label for="description">Opis: <span class="symbol-required">*</span></label>
-                <textarea id="description" name="description" rows="5" cols="40">Java jest najpopularniejszym językiem obiektowym używanym przez programistów na całym świecie. Itd...
-                </textarea>
+                <textarea id="description" name="description" rows="5" cols="40" th:text="${course.description}"></textarea>
                 <span id="errorDescription"></span>
 
                 <label for="price">Cena(zł): <span class="symbol-required">*</span></label>
-                <input type="number" name="price" id="price" min="200" step="50" value="250" required />
+                <input type="number" name="price" id="price" min="200" step="50" th:value="${course.price}" required />
                 <span id="errorPrice"></span>
 
                 <div class="formDiv">
                     <p id="errorsSummary"></p>
                     <input type="submit" value="Zatwierdź" class="form-button-submit"/>
-                    <a href="/courses/" class="form-button-cancel">Anuluj</a>
+                    <a href="/courses" class="form-button-cancel">Anuluj</a>
                 </div>
             </form>
 

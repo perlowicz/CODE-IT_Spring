@@ -8,8 +8,6 @@
         <link th:href="@{/css/list_style.css}" rel="stylesheet" />
         <link th:href="@{/css/invalid.css}" rel="stylesheet" />
         <link th:href="@{/css/form_style.css}" rel="stylesheet" />
-        <script type="application/javascript" th:src="@{/js/validationCommon.js}"></script>
-        <script type="application/javascript" th:src="@{/js/validationUser-CourseForm.js}"></script>
     </head>
     <body>
 
@@ -17,36 +15,42 @@
         <div th:insert="fragments/header"></div>
 
         <main>
+            <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>
+            <script type="text/javascript" th:src="@{/js/validationUser-CourseForm.js}"></script>
             <h3>Nowa transakcja</h3>
 
             <form class="form" method="post" action="/transactions" novalidate onsubmit="return validateForm();">
 
-                <label for="client_name">Użytkownik:</label>
-                <select name="client_name" id="client_name" >
-                    <option th:each="client: ${clients}"
-                    th:text="${client.userName}"></option>
+                <label for="clientName">Użytkownik:</label>
+                <select name="clientName" id="clientName" >
+                    <option th:each="clientName: ${userNames}"
+                            th:text="${clientName}"></option>
                 </select>
                 <span id="errorUser" class="error-text"></span>
 
-                <label for="course_name">Zakupiony kurs:</label>
-                <select name="course_name" id="course_name">
-                    <option th:each="course: ${courses}"
-                    th:text="${course.name}"></option>
+                <label for="courseName">Zakupiony kurs:</label>
+                <select name="courseName" id="courseName" >
+                    <option th:each="courseName: ${courseNames}"
+                            th:text="${courseName}"></option>
                 </select>
                 <span id="errorCourse" class="error-text"></span>
 
-                <label for="signup">Data zakupu: </label>
-                <input type="date" name="signup" id="signup" />
-                <span id="errorSignup" class="error-text"></span>
+<!--                <label for="signup">Data zakupu: </label>-->
+<!--                <input type="date" name="signup" id="signup" />-->
+<!--                <span id="errorSignup" class="error-text"></span>-->
 
-                <label for="expiring">Data wygaśnięcia: </label>
-                <input type="date" name="expiring" id="expiring" />
-                <span id="errorExpiring" class="error-text"></span>
+<!--                <label for="expiring">Data wygaśnięcia: </label>-->
+<!--                <input type="date" name="expiring" id="expiring" />-->
+<!--                <span id="errorExpiring" class="error-text"></span>-->
+
+                <label for="opinion">Opinia(opcjonalna):</label>
+                <textarea id="opinion" name="opinion" rows="5" cols="40" placeholder="max 200 znaków"></textarea>
+                <span id="errorDescription" class="error-text"></span>
 
                 <div class="formDiv">
                     <p id="errorsSummary" class="error-text"></p>
                     <input type="submit" value="Zatwiedź" class="form-button-submit"/>
-                    <a href="/transactions/" class="form-button-cancel">Anuluj</a>
+                    <a href="/" class="form-button-cancel">Anuluj</a>
                 </div>
             </form>
         

@@ -1,8 +1,8 @@
 function validateForm() {
-    const userNameInput = document.getElementById('username');
+    const userNameInput = document.getElementById('userName');
     const emailInput = document.getElementById('email');
     const passwordInput = document.getElementById('password');
-    const registrationInput = document.getElementById('registration');
+    const registrationInput = document.getElementById('registrationDate');
 
     const errorUsername = document.getElementById('errorUsername');
     const errorEmail = document.getElementById('errorEmail');

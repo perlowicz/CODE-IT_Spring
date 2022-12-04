@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,25 +18,11 @@ public class CourseController {
         this.courseService = courseService;
     }
 
-    @GetMapping("/courses/{id}")
-    ResponseEntity<Course> getCourseById(@PathVariable Long id){
-        return courseService.getCourseById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-//    @GetMapping("/courses")
-//    ResponseEntity<List<SimpleCourseDTO>> getAllCourses(){
-//        return courseService.getAllCourses()
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-
     @GetMapping("/courses")
     String getAllCourses(Model model){
         Optional<List<Course>> allCourses = courseService.getAllCourses();
         if (allCourses.isPresent() && allCourses.get().size() > 0){
-            model.addAttribute("courses", allCourses.get());
+            model.addAttribute("courses", allCourses.orElse(Collections.emptyList()));
         }
         return "pages/course/list";
     }
@@ -45,13 +32,39 @@ public class CourseController {
         return "pages/course/form";
     }
 
+    @GetMapping("/courses/edit/{id}")
+    String saveCourse(@PathVariable Long id, Model model){
+        Optional<Course> courseById = courseService.getCourseById(id);
+        if (courseById.isPresent())
+            model.addAttribute("course", courseById.get());
+        return "pages/course/form-edit";
+    }
+
     @PostMapping("/courses")
     String saveCourse(Course course){
         courseService.saveCourse(course);
-        return "redirect:courses";
+        return "redirect:/courses";
     }
 
-//    @PostMapping("/courses")
+    @PostMapping("/courses/edit/{id}")
+    String updateCourse(Course course){
+        courseService.replaceCourse(course);
+        return "redirect:/courses";
+    }
+
+    @GetMapping("/courses/delete/{id}")
+    String deleteCourse(@PathVariable Long id){
+        courseService.deleteCourse(id);
+        return "redirect:/courses";
+    }
+    //    @GetMapping("/courses")
+//    ResponseEntity<List<SimpleCourseDTO>> getAllCourses(){
+//        return courseService.getAllCourses()
+//                .map(ResponseEntity::ok)
+//                .orElse(ResponseEntity.notFound().build());
+//    }
+
+    //    @PostMapping("/courses")
 //    ResponseEntity<SimpleCourseDTO> save(@RequestBody SimpleCourseDTO simpleCourseDTO){
 //        SimpleCourseDTO saveCourse = courseService.saveCourse(simpleCourseDTO);
 //        URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
@@ -60,18 +73,4 @@ public class CourseController {
 //                .toUri();
 //        return ResponseEntity.created(savedClientURI).body(saveCourse);
 //    }
-
-    @PutMapping("/courses/{id}")
-    ResponseEntity<?> update(@PathVariable Long id,
-                             @RequestBody Course course){
-        return courseService.replaceCourse(id, course)
-                .map(c -> ResponseEntity.noContent().build())
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @DeleteMapping("/courses/{id}")
-    ResponseEntity<?> deleteCourse(@PathVariable Long id){
-        courseService.deleteCourse(id);
-        return ResponseEntity.noContent().build();
-    }
 }

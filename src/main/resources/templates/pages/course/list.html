@@ -19,6 +19,8 @@
                    <thead>
                     <tr>
                         <th>Nazwa kursu</th>
+                        <th>Opis</th>
+                        <th>Cena</th>
                         <th>Akcje</th>
                     </tr>
                    </thead>
@@ -26,11 +28,14 @@
                    <tbody>
                    <tr th:each="course: ${courses}">
                        <td th:text="${course.name}"></td>
+                       <td th:text="${course.description}"></td>
+                       <td th:text="${course.price}"></td>
                        <td>
                            <ul class="list-actions">
-                               <li><a th:href="@{'/transactions/' + ${course.id}}" class="list-actions-button-details">Szczegóły</a></li>
-                               <li><a href="/courses/edit" class="list-actions-button-edit">Edytuj</a></li>
-                               <li><a href="/clients/" class="list-actions-button-delete">Usuń</a></li>
+<!--                               do poprawy link szczegoly-->
+                               <li><a th:href="@{'/transactions/courses/' + ${course.id}}" class="list-actions-button-details">Szczegóły</a></li>
+                               <li><a th:href="@{'/courses/edit/' + ${course.id}}" class="list-actions-button-edit">Edytuj</a></li>
+                               <li><a th:href="@{'/courses/delete/' + ${course.id}}" class="list-actions-button-delete">Usuń</a></li>
                            </ul>
                        </td>
                    </tr>

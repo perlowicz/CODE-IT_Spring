@@ -15,14 +15,16 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne(
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.ALL
     )
     @JoinColumn(
             name = "client_id"
     )
     private Client client;
     @ManyToOne(
-            fetch = FetchType.EAGER
+            fetch = FetchType.EAGER,
+            cascade = CascadeType.PERSIST
     )
     @JoinColumn(
             name = "course_id"
