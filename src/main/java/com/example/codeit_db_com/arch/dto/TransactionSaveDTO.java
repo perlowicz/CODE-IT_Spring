@@ -7,6 +7,13 @@ public class TransactionSaveDTO {
     private String courseName;
     private String opinion;
 
+    public TransactionSaveDTO(String clientName, String courseName) {
+        this.clientName = clientName;
+        this.courseName = courseName;
+    }
+
+    public TransactionSaveDTO(){}
+
     public String getClientName() {
         return clientName;
     }

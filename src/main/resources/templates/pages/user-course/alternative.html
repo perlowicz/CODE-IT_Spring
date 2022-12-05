@@ -19,29 +19,23 @@
             <script type="text/javascript" th:src="@{/js/validationUser-CourseForm.js}"></script>
             <h3>Nowa transakcja</h3>
 
-            <form class="form" method="post" action="/transactions" novalidate onsubmit="return validateForm();">
+            <form class="form" method="post" th:action="@{/transactions}" th:object="${transaction}" novalidate onsubmit="return validateForm();">
 
                 <label for="clientName">Użytkownik:</label>
                 <select name="clientName" id="clientName" >
                     <option th:each="clientName: ${userNames}"
                             th:text="${clientName}"></option>
                 </select>
-                <span id="errorUser" class="error-text"></span>
+                <span th:if="${#fields.hasErrors()}" th:text="Existing" class="error-text"></span>
+                <span th:unless="${#fields.hasErrors()}" id="errorClient" class="error-text"></span>
 
                 <label for="courseName">Zakupiony kurs:</label>
                 <select name="courseName" id="courseName" >
                     <option th:each="courseName: ${courseNames}"
                             th:text="${courseName}"></option>
                 </select>
-                <span id="errorCourse" class="error-text"></span>
-
-<!--                <label for="signup">Data zakupu: </label>-->
-<!--                <input type="date" name="signup" id="signup" />-->
-<!--                <span id="errorSignup" class="error-text"></span>-->
-
-<!--                <label for="expiring">Data wygaśnięcia: </label>-->
-<!--                <input type="date" name="expiring" id="expiring" />-->
-<!--                <span id="errorExpiring" class="error-text"></span>-->
+                <span th:if="${#fields.hasErrors()}" th:text="Existing" class="error-text"></span>
+                <span th:unless="${#fields.hasErrors()}" id="errorCourse" class="error-text"></span>
 
                 <label for="opinion">Opinia(opcjonalna):</label>
                 <textarea id="opinion" name="opinion" rows="5" cols="40" placeholder="max 200 znaków"></textarea>

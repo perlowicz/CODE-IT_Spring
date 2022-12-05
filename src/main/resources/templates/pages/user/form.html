@@ -20,6 +20,7 @@
             <h3>Nowy użytkownik</h3>
 
             <form class="form" method="post" th:action="@{/clients}" th:object="${client}" novalidate onsubmit="return validateForm();">
+
                 <label for="userName">Nazwa użytkownika: <span class="symbol-required">*</span></label>
                 <input type="text" name="userName" id="userName" th:field="*{userName}" placeholder="example1234 max 50 znaków" />
                 <span th:unless="${#fields.hasErrors('${client.userName}')}" id="errorUsername" class="error-text"></span>
@@ -28,9 +29,9 @@
 
                 <label for="email">E-mail: <span class="symbol-required">*</span></label>
                 <input type="email" name="email" id="email" th:field="*{email}" placeholder="example@gmail.com" />
-                <span th:unless="${#fields.hasErrors('${client.email}')}" id="errorEmail" class="error-text"></span>
-                <span id="errorValidationEmail" class="error-text" th:errors="*{email}"></span>
-
+                <span th:if="${#fields.hasGlobalErrors()}" th:text="Existing" class="error-text"></span>
+                <span th:if="${#fields.hasGlobalErrors() == false && #fields.hasErrors('${client.email}') == false}" id="errorEmail" class="error-text" ></span> <!--span do js'a-->
+                <span th:unless="${#fields.hasGlobalErrors()}" id="errorValidationEmail" class="error-text" th:errors="*{email}"></span>
 
                 <label for="password">Hasło: <span class="symbol-required">*</span></label>
                 <input type="password" name="password" id="password" th:field="*{password}" />

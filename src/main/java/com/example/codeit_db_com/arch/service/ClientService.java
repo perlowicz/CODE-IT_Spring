@@ -13,11 +13,9 @@ import java.util.stream.Collectors;
 public class ClientService {
 
     private final ClientRepository clientRepository;
-    private final Validator validator;
 
-    public ClientService(ClientRepository clientRepository, Validator validator) {
+    public ClientService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
-        this.validator = validator;
     }
 
     public Optional<Client> getClientById(Long id){
@@ -60,5 +58,9 @@ public class ClientService {
             return clients.get().stream().map(Client::getUserName).collect(Collectors.toList());
         else
             return Collections.emptyList();
+    }
+
+    public boolean validEmail(String email){
+        return !clientRepository.existsByEmail(email);
     }
 }

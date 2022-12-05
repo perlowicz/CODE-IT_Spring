@@ -5,9 +5,12 @@ import com.example.codeit_db_com.arch.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.beans.PropertyEditor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +50,10 @@ public class ClientController {
 
     @PostMapping("/clients") //adding new client
     String saveClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
+        if (!clientService.validEmail(client.getEmail())){
+            bindingResult.reject("errorCode1", "errorCode2");
+            bindingResult.reject("errorCode2", "errorCode1");
+        }
         if (bindingResult.hasErrors()){
             return "pages/user/form";
         } else {
@@ -57,6 +64,10 @@ public class ClientController {
 
     @PostMapping("/clients/edit/{id}") //replacing client
     String updateClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
+        if (!clientService.validEmail(client.getEmail())){
+            bindingResult.reject("errorCode1", "errorCode2");
+            bindingResult.reject("errorCode2", "errorCode1");
+        }
         if (bindingResult.hasErrors()){
             return "pages/user/form-edit";
         } else {

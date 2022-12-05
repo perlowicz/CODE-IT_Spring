@@ -26,8 +26,9 @@
                 
                 <label for="email">E-mail: <span class="symbol-required">*</span></label>
                 <input type="text" name="email" id="email" th:value="${client.email}" required />
-                <span th:unless="${#fields.hasErrors('${client.email}')}" id="errorEmail" class="error-text"></span>
-                <span id="errorValidationEmail" class="error-text" th:errors="*{email}"></span>
+                <span th:if="${#fields.hasGlobalErrors()}" th:text="Existing" class="error-text"></span>
+                <span th:if="${#fields.hasGlobalErrors() == false && #fields.hasErrors('${client.email}') == false}" id="errorEmail" class="error-text" ></span> <!--span do js'a-->
+                <span th:unless="${#fields.hasGlobalErrors()}" id="errorValidationEmail" class="error-text" th:errors="*{email}"></span>
 
                 <label for="password">Hasło: <span class="symbol-required">*</span></label>
                 <input type="text" name="password" id="password" th:value="${client.password}" required />

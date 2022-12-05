@@ -4,8 +4,10 @@ import com.example.codeit_db_com.arch.entities.Course;
 import com.example.codeit_db_com.arch.service.CourseService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -29,7 +31,8 @@ public class CourseController {
     }
 
     @GetMapping("/courses/add") //redirect from list to form
-    String addNewCourse(){
+    String addNewCourse(Model model){
+        model.addAttribute("course", new Course());
         return "pages/course/form";
     }
 
@@ -42,15 +45,23 @@ public class CourseController {
     }
 
     @PostMapping("/courses")
-    String saveCourse(Course course){
-        courseService.saveCourse(course);
-        return "redirect:/courses";
+    String saveCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "pages/course/form";
+        } else {
+            courseService.saveCourse(course);
+            return "redirect:/courses";
+        }
     }
 
     @PostMapping("/courses/edit/{id}")
-    String updateCourse(Course course){
-        courseService.replaceCourse(course);
-        return "redirect:/courses";
+    String updateCourse(@Valid @ModelAttribute("course") Course course, BindingResult bindingResult){
+        if (bindingResult.hasErrors()){
+            return "pages/course/form-edit";
+        } else {
+            courseService.replaceCourse(course);
+            return "redirect:/courses";
+        }
     }
 
     @GetMapping("/courses/delete/{id}")
@@ -58,20 +69,4 @@ public class CourseController {
         courseService.deleteCourse(id);
         return "redirect:/courses";
     }
-    //    @GetMapping("/courses")
-//    ResponseEntity<List<SimpleCourseDTO>> getAllCourses(){
-//        return courseService.getAllCourses()
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
-
-    //    @PostMapping("/courses")
-//    ResponseEntity<SimpleCourseDTO> save(@RequestBody SimpleCourseDTO simpleCourseDTO){
-//        SimpleCourseDTO saveCourse = courseService.saveCourse(simpleCourseDTO);
-//        URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(saveCourse.getId())
-//                .toUri();
-//        return ResponseEntity.created(savedClientURI).body(saveCourse);
-//    }
 }

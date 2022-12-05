@@ -9,8 +9,11 @@ import com.example.codeit_db_com.arch.entities.Transaction;
 import com.example.codeit_db_com.arch.service.TransactionService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -58,19 +61,6 @@ public class TransactionController {
         return "pages/user-course/courseDetails";
     }
 
-//    @GetMapping("/transactions")
-//    String getAllTransactions(Model model){
-//        Optional<List<Client>> allClients = clientService.getAllClients();
-//        Optional<List<Course>> allCourses = courseService.getAllCourses();
-//        if (allClients.isPresent() && allCourses.isPresent()){
-////            List<String> clientUserNames = allClients.get().stream().map(Client::getUserName).collect(Collectors.toList());
-////            List<String> courseNames = allCourses.get().stream().map(Course::getName).collect(Collectors.toList());
-//            model.addAttribute("clients", allClients.get());
-//            model.addAttribute("courses", allCourses.get());
-//        }
-//        return "pages/user-course/alternative";
-//    }
-
     @GetMapping("/transactions")
     public String getAllTransactions(Model model){
         List<String> userNames = clientService.getAllClientsUsernames();
@@ -78,30 +68,24 @@ public class TransactionController {
         if (userNames.size() > 0 && courseNames.size() > 0){
             model.addAttribute("userNames", userNames);
             model.addAttribute("courseNames", courseNames);
+            model.addAttribute("transaction", new TransactionSaveDTO());
         }
         return "pages/user-course/alternative";
     }
 
     @PostMapping("/transactions")
-    public String saveTransaction(TransactionSaveDTO transactionSaveDTO){
-        transactionService.saveTransaction(transactionSaveDTO);
-        return "redirect:/";
+    public String saveTransaction(@Valid @ModelAttribute("transaction") TransactionSaveDTO transactionSaveDTO,
+                                  BindingResult bindingResult){
+        if (transactionService.transactionAlreadyExists(transactionSaveDTO)){
+            System.out.println("dupaaaaa");
+            bindingResult.reject("errorCode1", "errorCode2");
+            bindingResult.reject("errorCode2", "errorCode1");
+        }
+        if (bindingResult.hasErrors()){
+            return "pages/user-course/alternative";
+        } else {
+            transactionService.saveTransaction(transactionSaveDTO);
+            return "redirect:/";
+        }
     }
-
-//    @PostMapping("/transactions")
-//    ResponseEntity<TransactionSaveDTO> saveTransaction(@RequestBody TransactionSaveDTO transactionSaveDTO){
-//        TransactionSaveDTO saved = transactionService.saveTransaction(transactionSaveDTO);
-//        URI savedClientURI = ServletUriComponentsBuilder.fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(saved.getId())
-//                .toUri();
-//        return ResponseEntity.created(savedClientURI).body(saved);
-//    }
-
-    //    @GetMapping("/transactions")
-//    ResponseEntity<List<TransactionDTO>> getAllTransactions(){
-//        return transactionService.getAllTransactions()
-//                .map(ResponseEntity::ok)
-//                .orElse(ResponseEntity.notFound().build());
-//    }
 }

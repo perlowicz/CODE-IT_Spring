@@ -68,4 +68,14 @@ public class TransactionService {
         Transaction savedTransaction = transactionRepository.save(transaction);
         return savedTransaction;
     }
+
+    public boolean transactionAlreadyExists(TransactionSaveDTO transactionSaveDTO){
+        Optional<Client> byUserName = clientRepository.findByUserName(transactionSaveDTO.getClientName());
+        Optional<Course> courseByName = courseRepository.findCourseByName(transactionSaveDTO.getCourseName());
+        if (byUserName.isPresent() && courseByName.isPresent())
+            return transactionRepository.existsTransactionByClient_IdAndCourse_Id(
+                    byUserName.get().getId(),
+                    courseByName.get().getId());
+        return false;
+    }
 }

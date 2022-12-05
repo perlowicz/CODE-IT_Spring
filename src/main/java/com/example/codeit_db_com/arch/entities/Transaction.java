@@ -3,6 +3,7 @@ package com.example.codeit_db_com.arch.entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
@@ -42,9 +43,8 @@ public class Transaction {
     private LocalDate signupDate;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Past
+    @Future
     private LocalDate expirationDate;
-
 
     private String opinion;
 

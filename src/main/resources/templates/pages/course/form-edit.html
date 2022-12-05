@@ -17,18 +17,22 @@
             <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>
             <h3>Edycja kursu</h3>
 
-            <form class="form" method="post" th:action="@{'/courses/edit/' + ${course.id}}" novalidate onsubmit="return validateForm();">
+            <form class="form" method="post" th:action="@{'/courses/edit/' + ${course.id}}" th:object="${course}" novalidate onsubmit="return validateForm();">
+
                 <label for="name">Nazwa kursu: <span class="symbol-required">*</span></label>
-                <input type="text" name="name" id="name" th:value="${course.name}" required />
-                <span id="errorName"></span>
-                
+                <input type="text" name="name" id="name" th:field="*{name}" placeholder="2-50 znaków" required />
+                <span th:unless="${#fields.hasErrors('${course.name}')}" id="errorName" class="error-text"></span>
+                <span id="errorValidationName" class="error-text" th:errors="*{name}"></span>
+
                 <label for="description">Opis: <span class="symbol-required">*</span></label>
-                <textarea id="description" name="description" rows="5" cols="40" th:text="${course.description}"></textarea>
-                <span id="errorDescription"></span>
+                <textarea id="description" name="description" rows="5" cols="40" th:field="*{description}" placeholder="max 200 znaków"></textarea>
+                <span th:unless="${#fields.hasErrors('${course.description}')}" id="errorDescription" class="error-text"></span>
+                <span id="errorValidationDescription" class="error-text" th:errors="*{description}"></span>
 
                 <label for="price">Cena(zł): <span class="symbol-required">*</span></label>
-                <input type="number" name="price" id="price" min="200" step="50" th:value="${course.price}" required />
-                <span id="errorPrice"></span>
+                <input type="number" name="price" id="price" min="200" step="50" th:field="*{price}" placeholder="min 200, przeskok co 50" required />
+                <span th:unless="${#fields.hasErrors('${course.price}')}" id="errorPrice" class="error-text"></span>
+                <span id="errorValidationPrice" class="error-text" th:errors="*{price}"></span>
 
                 <div class="formDiv">
                     <p id="errorsSummary"></p>
