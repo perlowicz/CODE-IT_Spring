@@ -75,7 +75,6 @@ public class TransactionController {
     public String saveTransaction(@Valid @ModelAttribute("transaction") TransactionSaveDTO transactionSaveDTO,
                                   BindingResult bindingResult){
         if (transactionService.transactionAlreadyExists(transactionSaveDTO)){
-            System.out.println("dupaaaaa");
             bindingResult.reject("errorCode1", "errorCode2");
             bindingResult.reject("errorCode2", "errorCode1");
         }
