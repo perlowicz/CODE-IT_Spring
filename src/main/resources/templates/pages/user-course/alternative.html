@@ -17,9 +17,10 @@
         <main>
             <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>
             <script type="text/javascript" th:src="@{/js/validationUser-CourseForm.js}"></script>
-            <h3>Nowa transakcja</h3>
+            <h2 th:unless="${transaction}">Baza danych klientów oraz kursów jest pusta...</h2>
+            <h3 th:if="${transaction}">Nowa transakcja</h3>
 
-            <form class="form" method="post" th:action="@{/transactions}" th:object="${transaction}" novalidate onsubmit="return validateForm();">
+            <form class="form" th:if="${transaction}" method="post" th:action="@{/transactions}" th:object="${transaction}" novalidate onsubmit="return validateForm();">
 
                 <label for="clientName">Użytkownik:</label>
                 <select name="clientName" id="clientName" >
