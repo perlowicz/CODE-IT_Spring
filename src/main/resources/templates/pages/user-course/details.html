@@ -15,10 +15,10 @@
 
         <main>
 
-            <h3>Szczegóły użytkownika</h3>
+            <h3>Szczegoly uzytkownika</h3>
 
         <form class="form" th:if="${client}">
-            <label for="username">Nazwa użytkownika: <span class="symbol-required">*</span></label>
+            <label for="username">Nazwa uzytkownika: <span class="symbol-required">*</span></label>
             <input type="text" style="background-color: lightgray;" name="username" id="username" th:value="${client.userName}" disabled required />
             <span id="errorUsername"></span>
             
@@ -26,7 +26,7 @@
             <input type="text" style="background-color: lightgray;" name="email" id="email" th:value="${client.email}" disabled required />
             <span id="errorEmail"></span>
 
-            <label for="password">Hasło: <span class="symbol-required">*</span></label>
+            <label for="password">Haslo: <span class="symbol-required">*</span></label>
             <input type="text" style="background-color: lightgray;" name="password" id="password" th:value="${client.password}" disabled required />
             <span id="errorPassword"></span>
 
@@ -40,7 +40,7 @@
         <h3>Zakupione kursy</h3>
 
             <div class="table-div">
-                <h2 th:unless="${transactions}">Brak zarejestrowanych transakcji dla tego użytkownika</h2>
+                <h2 th:unless="${transactions}">Brak zarejestrowanych transakcji dla tego uzytkownika</h2>
             <table class="table-list" th:if="${transactions}">
                 <thead>
                     <tr>

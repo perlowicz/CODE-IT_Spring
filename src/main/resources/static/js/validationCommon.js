@@ -13,7 +13,7 @@ function checkRequired(value) {
         return false;
     }
     value = value.toString().trim();
-    if(value === "" || value === "-- Wybierz kurs--" || value === "-- Wybierz użytkownika--"){
+    if(value === "" || value === "-- Wybierz kurs--" || value === "-- Wybierz uzytkownika--"){
         return false;
     }
     return true;

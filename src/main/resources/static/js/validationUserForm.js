@@ -21,7 +21,7 @@ function validateForm() {
     } else if (!checkTextLengthRange(userNameInput.value, 7, 50)) {
         valid = false;
         userNameInput.classList.add("error-input");
-        errorUsername.innerText = "Pole powinno zawierać od 7 do 50 znaków";
+        errorUsername.innerText = "Pole powinno zawierac od 7 do 50 znakow";
     }
 
     // Walidacja dla pola email
@@ -32,12 +32,12 @@ function validateForm() {
     } else if (!checkTextLengthRange(emailInput.value, 5, 100)) {
         valid = false;
         emailInput.classList.add("error-input");
-        errorEmail.innerText = "Pole powinno zawierać od 5 do 100 znaków";
+        errorEmail.innerText = "Pole powinno zawierac od 5 do 100 znakow";
     } 
     else if (!checkEmail(emailInput.value)) {
         valid = false;
         emailInput.classList.add("error-input");
-        errorEmail.innerText = "Pole powinno zawierać prawidłowy adres email";
+        errorEmail.innerText = "Pole powinno zawierac prawidlowy adres email";
     }
 
     // Walidacja dla pola password
@@ -48,7 +48,7 @@ function validateForm() {
     } else if (!checkTextLengthRange(passwordInput.value, 8, 20)) {
         valid = false;
         passwordInput.classList.add("error-input");
-        errorPassword.innerText = "Pole powinno zawierać od 8 do 20 znaków";
+        errorPassword.innerText = "Pole powinno zawierac od 8 do 20 znakow";
     }
 
     // Walidacja dla pola registration
@@ -59,15 +59,15 @@ function validateForm() {
     } else if (!checkDate(registrationInput.value)) {
         valid = false;
         registrationInput.classList.add("error-input");
-        errorRegistration.innerText = "Data nie może być z przyszłości";
+        errorRegistration.innerText = "Data nie moze byc z przyszlosci";
     } else if (!checkDateFormat(registrationInput.value)){
         valid = false;
         registrationInput.classList.add("error-input");
-        errorRegistration.innerText = "Data w złym formacie";
+        errorRegistration.innerText = "Data w zlym formacie";
     }
 
     if (!valid) {
-        errorsSummary.innerText = "Formularz zawiera błędy";
+        errorsSummary.innerText = "Formularz zawiera bledy";
     }
 
     return valid;

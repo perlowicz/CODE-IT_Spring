@@ -5,17 +5,13 @@ import com.example.codeit_db_com.arch.service.ClientService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.beans.PropertyEditor;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-//@RestController
 @Controller
 public class ClientController {
 

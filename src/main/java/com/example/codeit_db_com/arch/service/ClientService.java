@@ -4,8 +4,6 @@ import com.example.codeit_db_com.arch.repositories.ClientRepository;
 import com.example.codeit_db_com.arch.entities.Client;
 import org.springframework.stereotype.Service;
 
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
 import java.util.*;
 import java.util.stream.Collectors;
 

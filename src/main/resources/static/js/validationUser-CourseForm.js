@@ -35,11 +35,11 @@ function validateForm() {
     } else if(!checkDate(signupInput.value)){
         valid = false;
         signupInput.classList.add("error-input");
-        errorSignup.innerText = "Data rejestracji nie może być z przyszłości";
+        errorSignup.innerText = "Data rejestracji nie moze byc z przyszlosci";
     } else if(!checkDateFormat(signupInput.value)){
         valid = false;
         signupInput.classList.add("error-input");
-        errorSignup.innerText = "Data w złym formacie";
+        errorSignup.innerText = "Data w zlym formacie";
     }
 
     // Walidacja dla pola expiring
@@ -50,15 +50,15 @@ function validateForm() {
     } else if(!checkExpiringDate(expiringInput.value, signupInput.value)){
         valid = false;
         expiringInput.classList.add("error-input");
-        errorExpiring.innerText = "Data wygaśnięcia licencji nie może być wcześniej niż data rejestracji zakupu";
+        errorExpiring.innerText = "Data wygasniecia licencji nie moze byc wczesniej niz data rejestracji zakupu";
     } else if(!checkDateFormat(expiringInput.value)){
         valid = false;
         expiringInput.classList.add("error-input");
-        errorExpiring.innerText = "Data w złym formacie";
+        errorExpiring.innerText = "Data w zlym formacie";
     }
 
     if (!valid) {
-        errorsSummary.innerText = "Formularz zawiera błędy";
+        errorsSummary.innerText = "Formularz zawiera bledy";
     }
 
     return valid;

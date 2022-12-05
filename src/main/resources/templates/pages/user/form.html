@@ -17,12 +17,12 @@
         <main>
 <!--            <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>-->
 <!--            <script type="text/javascript" th:src="@{/js/validationUserForm.js}"></script>-->
-            <h3>Nowy użytkownik</h3>
+            <h3>Nowy uzytkownik</h3>
 
             <form class="form" method="post" th:action="@{/clients}" th:object="${client}" novalidate onsubmit="return validateForm();">
 
-                <label for="userName">Nazwa użytkownika: <span class="symbol-required">*</span></label>
-                <input type="text" name="userName" id="userName" th:field="*{userName}" placeholder="example1234 max 50 znaków" />
+                <label for="userName">Nazwa uzytkownika: <span class="symbol-required">*</span></label>
+                <input type="text" name="userName" id="userName" th:field="*{userName}" placeholder="example1234 max 50 znakow" />
                 <span th:unless="${#fields.hasErrors('${client.userName}')}" id="errorUsername" class="error-text"></span>
                 <span id="errorValidationUsername" class="error-text" th:errors="*{userName}"></span>
 
@@ -33,7 +33,7 @@
                 <span th:if="${#fields.hasGlobalErrors() == false && #fields.hasErrors('${client.email}') == false}" id="errorEmail" class="error-text" ></span> <!--span do js'a-->
                 <span th:unless="${#fields.hasGlobalErrors()}" id="errorValidationEmail" class="error-text" th:errors="*{email}"></span>
 
-                <label for="password">Hasło: <span class="symbol-required">*</span></label>
+                <label for="password">Haslo: <span class="symbol-required">*</span></label>
                 <input type="password" name="password" id="password" th:field="*{password}" />
                 <span th:unless="${#fields.hasErrors('${client.password}')}" id="errorPassword" class="error-text"></span>
                 <span id="errorValidationPassword" class="error-text" th:errors="*{password}"></span>

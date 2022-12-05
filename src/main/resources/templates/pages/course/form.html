@@ -21,12 +21,12 @@
     <form class="form" method="post" th:action="@{/courses}" th:object="${course}" novalidate onsubmit="return validateForm();">
 
         <label for="name">Nazwa kursu: <span class="symbol-required">*</span></label>
-        <input type="text" name="name" id="name" th:field="*{name}" placeholder="2-50 znaków" required />
+        <input type="text" name="name" id="name" th:field="*{name}" placeholder="2-50 znakow" required />
         <span th:unless="${#fields.hasErrors('${course.name}')}" id="errorName" class="error-text"></span>
         <span id="errorValidationName" class="error-text" th:errors="*{name}"></span>
 
         <label for="description">Opis: <span class="symbol-required">*</span></label>
-        <textarea id="description" name="description" rows="5" cols="40" th:field="*{description}" placeholder="max 200 znaków"></textarea>
+        <textarea id="description" name="description" rows="5" cols="40" th:field="*{description}" placeholder="max 200 znakow"></textarea>
         <span th:unless="${#fields.hasErrors('${course.description}')}" id="errorDescription" class="error-text"></span>
         <span id="errorValidationDescription" class="error-text" th:errors="*{description}"></span>
 
