@@ -78,4 +78,8 @@ public class TransactionService {
                     courseByName.get().getId());
         return false;
     }
+
+    public void deleteTransaction(Long id){
+        transactionRepository.deleteById(id);
+    }
 }

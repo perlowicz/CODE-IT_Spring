@@ -48,6 +48,7 @@
                         <th>Data zakupu kursu</th>
                         <th>Data wygaśnięcia kursu</th>
                         <th>Opinia (opcjonalnie)</th>
+                        <th>Akcje</th>
                     </tr>
                 </thead>
 
@@ -57,6 +58,11 @@
                         <td th:text="${transaction.signupDate}"></td>
                         <td th:text="${transaction.expirationDate}"></td>
                         <td th:text="${transaction.opinion}"></td>
+                        <td>
+                            <ul class="list-actions">
+                                <li><a th:href="@{'/transactions/delete/' + ${transaction.id}}" class="list-actions-button-delete">Usuń</a></li>
+                            </ul>
+                        </td>
                     </tr>
                 </tbody>
             </table>

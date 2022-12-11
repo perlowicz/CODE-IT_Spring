@@ -19,8 +19,8 @@ public class Transaction {
     private Long id;
 
     @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.ALL
+            fetch = FetchType.EAGER
+//            cascade = CascadeType.DETACH
     )
     @JoinColumn(
             name = "client_id"
@@ -29,8 +29,8 @@ public class Transaction {
     private Client client;
 
     @ManyToOne(
-            fetch = FetchType.EAGER,
-            cascade = CascadeType.PERSIST
+            fetch = FetchType.EAGER
+//            cascade = CascadeType.DETACH
     )
     @JoinColumn(
             name = "course_id"
