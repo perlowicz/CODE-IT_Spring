@@ -52,34 +52,41 @@ public class TransactionService {
     }
 
     public Transaction saveTransaction(TransactionSaveDTO transactionSaveDTO){
-        Optional<Client> clientByUserName = clientRepository.findByUserName(transactionSaveDTO.getClientName());
-        Optional<Course> courseByName = courseRepository.findCourseByName(transactionSaveDTO.getCourseName());
+        Optional<Client> clientFoundByUserName = clientRepository.findByUserName(transactionSaveDTO.getClientName());
+        Optional<Course> courseFoundByName = courseRepository.findCourseByName(transactionSaveDTO.getCourseName());
         Transaction transaction = new Transaction();
-        if(clientByUserName.isPresent() && courseByName.isPresent()){
-            transaction.setClient(clientByUserName.get());
-            transaction.setCourse(courseByName.get());
-            transaction.setSignupDate(LocalDate.now());
-            transaction.setExpirationDate(LocalDate.now().plusYears(1));
-            if (!transactionSaveDTO.getOpinion().equals(""))
-                transaction.setOpinion(transactionSaveDTO.getOpinion());
-            else
-                transaction.setOpinion("brak opinii");
+        if(clientFoundByUserName.isPresent() && courseFoundByName.isPresent()){
+            setTransactionAttributes(transaction, clientFoundByUserName.get(), courseFoundByName.get(), transactionSaveDTO);
         }
-        Transaction savedTransaction = transactionRepository.save(transaction);
-        return savedTransaction;
+        return transactionRepository.save(transaction);
     }
 
     public boolean transactionAlreadyExists(TransactionSaveDTO transactionSaveDTO){
-        Optional<Client> byUserName = clientRepository.findByUserName(transactionSaveDTO.getClientName());
-        Optional<Course> courseByName = courseRepository.findCourseByName(transactionSaveDTO.getCourseName());
-        if (byUserName.isPresent() && courseByName.isPresent())
+        Optional<Client> clientFoundByUserName = clientRepository.findByUserName(transactionSaveDTO.getClientName());
+        Optional<Course> courseFoundByName = courseRepository.findCourseByName(transactionSaveDTO.getCourseName());
+        if (clientFoundByUserName.isPresent() && courseFoundByName.isPresent())
             return transactionRepository.existsTransactionByClient_IdAndCourse_Id(
-                    byUserName.get().getId(),
-                    courseByName.get().getId());
+                    clientFoundByUserName.get().getId(),
+                    courseFoundByName.get().getId());
         return false;
     }
 
     public void deleteTransaction(Long id){
         transactionRepository.deleteById(id);
+    }
+
+    private void setTransactionAttributes(Transaction transaction,
+                                          Client client,
+                                          Course course,
+                                          TransactionSaveDTO transactionSaveDTO)
+    {
+        transaction.setClient(client);
+        transaction.setCourse(course);
+        transaction.setSignupDate(LocalDate.now());
+        transaction.setExpirationDate(LocalDate.now().plusYears(1));
+        if (!transactionSaveDTO.getOpinion().equals(""))
+            transaction.setOpinion(transactionSaveDTO.getOpinion());
+        else
+            transaction.setOpinion("brak opinii");
     }
 }

@@ -22,21 +22,21 @@ public class ClientService {
 
     public Optional<List<Client>> getAllClients(){
         List<Client> resultList = new ArrayList<>();
-        clientRepository.findAll().forEach(resultList::add);
+        clientRepository.findAll()
+                .forEach(resultList::add);
         return Optional.of(resultList);
     }
 
     public Client saveClient(Client client){
-        Client savedClient = clientRepository.save(client);
-        return savedClient;
+        return clientRepository.save(client);
     }
 
     public Optional<Client> replaceClient(Client client){
-        if (!clientRepository.existsById(client.getId())) {
-            return Optional.empty();
+        if (clientRepository.existsById(client.getId())) {
+            Client updatedEntity = clientRepository.save(client);
+            return Optional.of(updatedEntity);
         }
-        Client updatedEntity = clientRepository.save(client);
-        return Optional.of(updatedEntity);
+        return Optional.empty();
     }
 
     public Optional<Client> getClientByName(String name){
@@ -46,16 +46,18 @@ public class ClientService {
     public Optional<Client> getClientEntityById(Long id){
         return clientRepository.findById(id);
     }
+
     public void deleteClient(Long id){
         clientRepository.deleteById(id);
     }
 
     public List<String> getAllClientsUsernames(){
         Optional<List<Client>> clients = getAllClients();
-        if (clients.isPresent())
-            return clients.get().stream().map(Client::getUserName).collect(Collectors.toList());
-        else
-            return Collections.emptyList();
+        return clients
+                .map(clientList -> clientList.stream()
+                        .map(Client::getUserName)
+                        .collect(Collectors.toList()))
+                .orElse(Collections.emptyList());
     }
 
     public boolean validEmail(String email){

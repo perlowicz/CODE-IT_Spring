@@ -29,8 +29,7 @@ public class CourseService {
     }
 
     public Course saveCourse(Course course){
-        Course savedClient = courseRepository.save(course);
-        return savedClient;
+        return courseRepository.save(course);
     }
 
     public Optional<Course> replaceCourse(Course course){

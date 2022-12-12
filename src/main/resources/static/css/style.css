@@ -8,8 +8,9 @@ body {
 }
 
 header,
-main,
-footer {
+main
+/*footer */
+{
     background-color: white;
 }
 
@@ -21,7 +22,8 @@ nav {
 }
 
 header,
-footer {
+footer
+{
     background-color: #34495e;
     color: white;
     padding: 1rem;

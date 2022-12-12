@@ -24,27 +24,27 @@ public class ClientController {
     @GetMapping("/clients")
     public String getAllClients(Model model){
         Optional<List<Client>> allClients = clientService.getAllClients();
-        if (allClients.isPresent() && allClients.get().size() > 0){
+        if (isNotEmpty(allClients) && allClients.get().size() > 0){
             model.addAttribute("clients", allClients.orElse(Collections.emptyList()));
         }
         return "pages/user/list";
     }
 
-    @GetMapping("/clients/add") //redirect from list to form
+    @GetMapping("/clients/add")
     public String addNewClient(Model model){
         model.addAttribute("client", new Client());
         return "pages/user/form";
     }
 
-    @GetMapping("/clients/edit/{id}") //redirect from list to form-edit
+    @GetMapping("/clients/edit/{id}")
     String update(@PathVariable Long id, Model model){
-        Optional<Client> clientById = clientService.getClientById(id);
-        if (clientById.isPresent())
-            model.addAttribute("client", clientById.get());
+        Optional<Client> clientFoundById = clientService.getClientById(id);
+        if (isNotEmpty(clientFoundById))
+            model.addAttribute("client", clientFoundById.get());
         return "pages/user/form-edit";
     }
 
-    @PostMapping("/clients") //adding new client
+    @PostMapping("/clients")
     String saveClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
         if (!clientService.validEmail(client.getEmail())){
             bindingResult.reject("errorCode1", "errorCode2");
@@ -58,7 +58,7 @@ public class ClientController {
         }
     }
 
-    @PostMapping("/clients/edit/{id}") //replacing client
+    @PostMapping("/clients/edit/{id}")
     String updateClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
         if (!clientService.validEmail(client.getEmail())){
             bindingResult.reject("errorCode1", "errorCode2");
@@ -76,5 +76,9 @@ public class ClientController {
     String deleteClient(@PathVariable Long id){
         clientService.deleteClient(id);
         return "redirect:/clients";
+    }
+
+    private boolean isNotEmpty(Optional<?> anySource){
+        return anySource.isPresent();
     }
 }

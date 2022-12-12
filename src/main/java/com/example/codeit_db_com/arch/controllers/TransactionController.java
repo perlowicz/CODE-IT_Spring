@@ -34,7 +34,7 @@ public class TransactionController {
     @GetMapping("/transactions/{id}")
     public String getTransactionById(@PathVariable Long id, Model model){
         Optional<List<Transaction>> allTransactionsByUserId = transactionService.getAllTransactionsByUserId(id);
-        if (allTransactionsByUserId.isPresent() && allTransactionsByUserId.get().size() > 0) {
+        if (isNotEmpty(allTransactionsByUserId) && allTransactionsByUserId.get().size() > 0) {
             Optional<Client> clientEntityById = clientService.getClientEntityById(id);
             model.addAttribute("client", clientEntityById.get());
             model.addAttribute("transactions", allTransactionsByUserId.get());
@@ -47,11 +47,11 @@ public class TransactionController {
 
     @GetMapping("/transactions/courses/{id}")
     public String getCoursesInfo(@PathVariable Long id, Model model){
-        Optional<List<Transaction>> allTransactionsByCourseId = transactionService.getAllTransactionsByCourseId(id);
-        if (allTransactionsByCourseId.isPresent() && allTransactionsByCourseId.get().size() > 0){
+        Optional<List<Transaction>> transactionsFoundByCourseId = transactionService.getAllTransactionsByCourseId(id);
+        if (isNotEmpty(transactionsFoundByCourseId) && transactionsFoundByCourseId.get().size() > 0){
             Optional<Course> courseById = courseService.getCourseById(id);
             model.addAttribute("course", courseById.get());
-            model.addAttribute("transactions", allTransactionsByCourseId.get());
+            model.addAttribute("transactions", transactionsFoundByCourseId.get());
         } else {
             Optional<Course> courseById = courseService.getCourseById(id);
             model.addAttribute("course", courseById.get());
@@ -92,4 +92,7 @@ public class TransactionController {
         return "redirect:/";
     }
 
+    private boolean isNotEmpty(Optional<?> anySource){
+        return anySource.isPresent();
+    }
 }

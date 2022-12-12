@@ -8,12 +8,13 @@
     <link th:href="@{/css/list_style.css}" rel="stylesheet" />
     <link th:href="@{/css/invalid.css}" rel="stylesheet" />
     <link th:href="@{/css/form_style.css}" rel="stylesheet" />
+<!--    <link th:href="@{/css/footerStyle.css}" rel="stylesheet" />-->
 </head>
 <body>
 
-<div th:insert="fragments/header"></div>
+    <div th:insert="fragments/header"></div>
 
-<main>
+    <main>
 <!--    <script type="text/javascript" th:src="@{/js/validationCommon.js}"></script>-->
 <!--    <script type="text/javascript" th:src="@{/js/validationCourseForm.js}"></script>-->
     <h3>Nowy kurs</h3>
@@ -43,8 +44,11 @@
     </form>
 
 
-</main>
+    </main>
 
-<div th:insert="fragments/footer"></div>
+<!--    <div th:insert="fragments/betterFooter"></div>-->
+    <div th:insert="fragments/footer"></div>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 </body>
 </html>

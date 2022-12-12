@@ -24,13 +24,13 @@ public class CourseController {
     @GetMapping("/courses")
     String getAllCourses(Model model){
         Optional<List<Course>> allCourses = courseService.getAllCourses();
-        if (allCourses.isPresent() && allCourses.get().size() > 0){
+        if (isNotEmpty(allCourses) && allCourses.get().size() > 0){
             model.addAttribute("courses", allCourses.orElse(Collections.emptyList()));
         }
         return "pages/course/list";
     }
 
-    @GetMapping("/courses/add") //redirect from list to form
+    @GetMapping("/courses/add")
     String addNewCourse(Model model){
         model.addAttribute("course", new Course());
         return "pages/course/form";
@@ -38,9 +38,9 @@ public class CourseController {
 
     @GetMapping("/courses/edit/{id}")
     String saveCourse(@PathVariable Long id, Model model){
-        Optional<Course> courseById = courseService.getCourseById(id);
-        if (courseById.isPresent())
-            model.addAttribute("course", courseById.get());
+        Optional<Course> courseFoundById = courseService.getCourseById(id);
+        if (isNotEmpty(courseFoundById))
+            model.addAttribute("course", courseFoundById.get());
         return "pages/course/form-edit";
     }
 
@@ -68,5 +68,9 @@ public class CourseController {
     String deleteCourse(@PathVariable Long id){
         courseService.deleteCourse(id);
         return "redirect:/courses";
+    }
+
+    private boolean isNotEmpty(Optional<?> anySource){
+        return anySource.isPresent();
     }
 }
