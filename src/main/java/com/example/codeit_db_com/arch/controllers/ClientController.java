@@ -46,7 +46,7 @@ public class ClientController {
 
     @PostMapping("/clients")
     String saveClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
-        if (!clientService.validEmail(client.getEmail())){
+        if (!clientService.isUnique(client.getEmail())){
             bindingResult.reject("errorCode1", "errorCode2");
             bindingResult.reject("errorCode2", "errorCode1");
         }
@@ -60,7 +60,7 @@ public class ClientController {
 
     @PostMapping("/clients/edit/{id}")
     String updateClient(@Valid @ModelAttribute("client") Client client, BindingResult bindingResult){
-        if (!clientService.validEmail(client.getEmail())){
+        if (!clientService.isUnique(client.getEmail())){
             bindingResult.reject("errorCode1", "errorCode2");
             bindingResult.reject("errorCode2", "errorCode1");
         }

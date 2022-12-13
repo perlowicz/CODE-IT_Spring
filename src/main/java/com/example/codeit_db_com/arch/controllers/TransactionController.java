@@ -34,7 +34,7 @@ public class TransactionController {
     @GetMapping("/transactions/{id}")
     public String getTransactionById(@PathVariable Long id, Model model){
         Optional<List<Transaction>> allTransactionsByUserId = transactionService.getAllTransactionsByUserId(id);
-        if (isNotEmpty(allTransactionsByUserId) && allTransactionsByUserId.get().size() > 0) {
+        if (isNotEmpty(allTransactionsByUserId) && !allTransactionsByUserId.get().isEmpty()) {
             Optional<Client> clientEntityById = clientService.getClientEntityById(id);
             model.addAttribute("client", clientEntityById.get());
             model.addAttribute("transactions", allTransactionsByUserId.get());
@@ -48,7 +48,7 @@ public class TransactionController {
     @GetMapping("/transactions/courses/{id}")
     public String getCoursesInfo(@PathVariable Long id, Model model){
         Optional<List<Transaction>> transactionsFoundByCourseId = transactionService.getAllTransactionsByCourseId(id);
-        if (isNotEmpty(transactionsFoundByCourseId) && transactionsFoundByCourseId.get().size() > 0){
+        if (isNotEmpty(transactionsFoundByCourseId) && !transactionsFoundByCourseId.get().isEmpty()){
             Optional<Course> courseById = courseService.getCourseById(id);
             model.addAttribute("course", courseById.get());
             model.addAttribute("transactions", transactionsFoundByCourseId.get());
@@ -61,9 +61,9 @@ public class TransactionController {
 
     @GetMapping("/transactions")
     public String getAllTransactions(Model model){
-        List<String> userNames = clientService.getAllClientsUsernames();
-        List<String> courseNames = courseService.getAllCoursesNames();
-        if (userNames.size() > 0 && courseNames.size() > 0){
+        List<String> userNames = clientService.mapClientsToUsernames();
+        List<String> courseNames = courseService.mapCoursesToNames();
+        if (!userNames.isEmpty() && !courseNames.isEmpty()){
             model.addAttribute("userNames", userNames);
             model.addAttribute("courseNames", courseNames);
             model.addAttribute("transaction", new TransactionSaveDTO());

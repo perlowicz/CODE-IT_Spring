@@ -47,10 +47,12 @@ public class CourseService {
         courseRepository.deleteById(id);
     }
 
-    public List<String> getAllCoursesNames(){
+    public List<String> mapCoursesToNames(){
         Optional<List<Course>> courses = getAllCourses();
         if (courses.isPresent())
-            return courses.get().stream().map(Course::getName).collect(Collectors.toList());
+            return courses.get().stream()
+                    .map(Course::getName)
+                    .collect(Collectors.toList());
         else
             return Collections.emptyList();
     }

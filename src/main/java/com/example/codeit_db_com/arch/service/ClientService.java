@@ -51,7 +51,7 @@ public class ClientService {
         clientRepository.deleteById(id);
     }
 
-    public List<String> getAllClientsUsernames(){
+    public List<String> mapClientsToUsernames(){
         Optional<List<Client>> clients = getAllClients();
         return clients
                 .map(clientList -> clientList.stream()
@@ -60,7 +60,7 @@ public class ClientService {
                 .orElse(Collections.emptyList());
     }
 
-    public boolean validEmail(String email){
+    public boolean isUnique(String email){
         return !clientRepository.existsByEmail(email);
     }
 }
